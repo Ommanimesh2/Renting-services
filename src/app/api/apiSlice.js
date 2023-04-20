@@ -64,12 +64,27 @@ export const apiSlice = createApi({
                 body: initialPost
             })
         }),
+        postRentMachines: builder.mutation({
+            query: (initialPost) => ({
+                url: '/api/rentmachine/',
+                method: 'POST',
+                body: initialPost
+            })             
+        }),
+        postBookedStatus: builder.mutation({
+            query: (initialPatch) => ({
+                url: `/api/rentdata/${machineId}/`,
+                method: 'PATCH',
+                body: initialPatch
+            })             
+        }),
+
         getAllRentMachines: builder.query({
             query: () => '/api/rentmachine/'
         }),
 
         getRentMachine: builder.query({
-            query: machineId => `/api/rentmachine/${machineId}/`
+            query: machineId => `/api/rentdata/${machineId}`
         }),
 
         updateRentMachine: builder.mutation({
@@ -95,6 +110,7 @@ export const apiSlice = createApi({
 export const {
     useSignUpMutation,
     useGetAllRentMachinesQuery,
+    usePostRentMachinesMutation,
     useGetRentMachineQuery,
     useUpdateRentMachineMutation,
     useDeleteRentMachineMutation,

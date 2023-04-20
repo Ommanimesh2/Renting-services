@@ -62,6 +62,7 @@ const Login = ({navigation}: any) => {
         style={styles.signbutton}
         onPress={(e) => {
             handleSubmit(e)
+            navigation.navigate("adminRoutes")
         }}
       >
         <Text >Login</Text>

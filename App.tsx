@@ -38,7 +38,8 @@ const App = () => {
         <Stack.Screen name="adminRoutes" component={AdminRoutes} options={{headerShown: false}}/>
         <Stack.Screen name="userRoutes" component={UserRoutes} options={{headerShown: false}}/>
               </>:<>
-        
+  
+              <Stack.Screen name="adminRoutes" component={AdminRoutes} options={{headerShown: false}}/>
         <Stack.Screen name="signup" component={Signup} options={{headerShown: false}}/>
         <Stack.Screen name="login" component={Login} options={{headerShown:false}}/>
               </>
