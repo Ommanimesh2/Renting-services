@@ -3,6 +3,7 @@ import { useNewAccessTokenMutation } from '../app/api/apiSlice'
 var jwt_decode = require('jwt-decode')
 
 async function getAccessUsingRefresh (refreshToken) {
+  console.log(refreshToken)
   return fetch('http://127.0.0.1:8000/jwt/refresh/', {
     method: 'POST',
 
@@ -50,7 +51,7 @@ async function getVerifiedKeys (keys) {
       if (!isTokenExpired(keys.refresh)) {
         console.log('fetching access using refresh')
 
-        const response = await getAccessUsingRefresh(keys)
+        const response = await getAccessUsingRefresh(keys.refresh)
         console.log(response)
         await AsyncStorage.setItem('keys', JSON.stringify(response))
 

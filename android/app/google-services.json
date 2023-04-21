@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "294897178865",
+    "project_id": "bhoomirent-df650",
+    "storage_bucket": "bhoomirent-df650.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294897178865:android:69390de007cb78ce4a7150",
+        "android_client_info": {
+          "package_name": "com.newbhoomirent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294897178865-sp5oe5h8ohajbpgltlonnju8mk00co7k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCihFhVZuFEXzbGEDbabYVEpPyhi4_8VQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294897178865-sp5oe5h8ohajbpgltlonnju8mk00co7k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

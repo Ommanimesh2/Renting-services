@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AddRentMachines from '../../features/admin/AddRentMachines';
 import RentMachines from '../../features/admin/RentMachines';
 import ViewRentedMachines from '../../features/admin/ViewRentedMachines';
+import UploadScreen from '../../features/UploadScreen/UploadScreen';
 const Tab=createBottomTabNavigator()
 
 const AdminRoutes = () => {

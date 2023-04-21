@@ -10,6 +10,8 @@ import Login from './src/features/Login'
 import Signup from './src/features/Signup'
 import AdminRoutes from './src/app/routes/AdminRoutes'
 import UserRoutes from './src/app/routes/UserRoutes'
+import UploadScreen from './src/features/UploadScreen/UploadScreen'
+import UniqueProductScreen from './src/features/users/UniqueProductScreen'
 const App = () => {
   const Stack=createNativeStackNavigator()
   const [isAuth, setIsAuth]= useState(false)
@@ -37,11 +39,13 @@ const App = () => {
     isAuth ? <>
         <Stack.Screen name="adminRoutes" component={AdminRoutes} options={{headerShown: false}}/>
         <Stack.Screen name="userRoutes" component={UserRoutes} options={{headerShown: false}}/>
+        <Stack.Screen name="uniqueMachine" initialParams={{ itemId: 21 }} component={UniqueProductScreen} options={{headerShown:false}}/>
               </>:<>
   
-              <Stack.Screen name="adminRoutes" component={AdminRoutes} options={{headerShown: false}}/>
         <Stack.Screen name="signup" component={Signup} options={{headerShown: false}}/>
         <Stack.Screen name="login" component={Login} options={{headerShown:false}}/>
+        <Stack.Screen name="adminRoutes" component={AdminRoutes} options={{headerShown: false}}/>
+        <Stack.Screen name="uniqueMachine" initialParams={{ itemId: 21 }} component={UniqueProductScreen} options={{headerShown:false}}/>
               </>
       }
       </Stack.Navigator>

@@ -1,4 +1,4 @@
-import { StyleSheet,TextInput,Pressable, Text, View,Button } from 'react-native'
+import { StyleSheet,TextInput,Pressable, Text, View,Button, Alert } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import ScreenWrapper from '../../app/components/ScreenWrapper'
@@ -8,9 +8,12 @@ import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-date-picker'
 import * as ImagePicker from 'react-native-image-picker';
 import { usePostRentMachinesMutation } from '../../app/api/apiSlice';
-
+import UploadScreen from '../UploadScreen/UploadScreen'
+import { useSelector } from 'react-redux'
 const AddRentMachines = () => {
   var launchImageLibrary = require('react-native-image-picker');
+  const {currUser, loading}= useSelector((state) => state.user);
+  const {image}= useSelector((state) => state.image);
   const [name, setName] = useState("")
   const [machineDetails, setMachineDetails] = useState("")
   const [price, setPrice] = useState("")
@@ -56,6 +59,7 @@ console.log(formattedDate);
     console.log('Contact:', contact);
     console.log('BookedStatus:', bookedstatus);
     console.log('Date:', formattedDate); 
+    console.log('imageurl:', image); 
 
     const resp = await RentMachine({
       Name: name,
@@ -63,11 +67,15 @@ console.log(formattedDate);
       BookedStatus: contact,
       Price: price,
       Contact: machineDetails,
-      rentimage: bookedstatus,
+      rentimage: image,
       date: formattedDate,
     });
 
     console.log(resp);
+    Alert.alert(
+      'Machine Uploaded',
+      'Machine added successfully',
+    );
     setContact('')
     setPrice('')
     setMachineDetails('')
@@ -178,13 +186,7 @@ console.log(formattedDate);
           setOpen(false)
         }}
       />
-               <Pressable 
-          style={styles.addjobbutton}
-          onPress= {pickImage}
-        
-        >
-              <Text style={styles.addjobtext}>Add photo</Text>
-        </Pressable>
+        <UploadScreen/>
         <Pressable
           style={styles.addjobbutton}
           onPress={() => {

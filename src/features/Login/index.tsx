@@ -2,15 +2,17 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 
 import React from 'react'
 import{ useRef, useState, useEffect} from 'react'
 import { getCredentials, setCredentials } from '../../helpers/credentials'
-import { useDispatch } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { setCurrUser } from '../users/userSlice'
 import { useLoginMutation } from '../../app/api/apiSlice'
+import { RootState } from '../../app/store'
 const Login = ({navigation}: any) => {
 
     const [user, setUser] = useState('')
     const [pwd, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
-
+    const dispatch = useDispatch();
+    const {currUser, loading}= useSelector((state: RootState) => state.user);
 
     const [login, { isLoading }] = useLoginMutation()
     useEffect(() => {
@@ -23,7 +25,9 @@ const Login = ({navigation}: any) => {
         try {
             const userData: any = await login({ email:user, password:pwd })
             console.log(userData)
+            dispatch(setCurrUser(userData.data.user))
             setCredentials(userData.data.tokens)
+            navigation.navigate("AddMachine")
         } catch (err) {
             console.log(err)
   
@@ -36,7 +40,7 @@ const Login = ({navigation}: any) => {
     <TextInput
       style={styles.input}
       underlineColorAndroid="transparent"
-      placeholder="username"
+      placeholder="email"
       placeholderTextColor="rgba(0, 0, 0, 0.7)"
       autoCapitalize="none"
       onChangeText={text => setUser(text)}
