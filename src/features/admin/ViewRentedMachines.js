@@ -1,35 +1,36 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-import { useGetAllRentMachinesQuery } from '../../app/api/apiSlice'
-import ScreenWrapper from '../../app/components/ScreenWrapper'
+import {StyleSheet, Text, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {useState} from 'react';
+import {useGetAllOrdersQuery} from '../../app/api/apiSlice';
+import ScreenWrapper from '../../app/components/ScreenWrapper';
 const ViewRentedMachines = () => {
+  const [allrentmachinedata, setAllRentMachineData] = useState([]);
 
-  const [allrentmachinedata, setAllRentMachineData]=useState([])
-  
-  const { data: machines, isSuccess, error } = useGetAllRentMachinesQuery()
+  const {data: machines, isSuccess, error, isLoading} = useGetAllOrdersQuery();
   let dataArray;
-  useEffect(()=>{
-    if(isSuccess){
-//     content= JSON.stringify(machines)
-// console.log(content[3])
- dataArray = Array.from(machines); // Convert data to array
- console.log(dataArray);
-//  setAllRentMachineData(dataArray)
-//  setAllRentMachineData([...allrentmachinedata, dataArray[0]]);
-// console.log(allrentmachinedata)
-// setAllRentMachineData(dataArray)
-    // console.log(allrentmachinedata)
-    }else if(error){
-     console.log(error)
-    }
-  } , [])
 
-  return (
-    
+  if (isSuccess) {
+    console.log(isLoading);
+    dataArray = machines; // Convert data to array
+    console.log(dataArray);
+  } else if (error) {
+    console.log('object');
+    console.log(error);
+  }
+
+  return !isLoading ? (
     <ScreenWrapper>
       <Text>ViewRentedMachines </Text>
-   <Text>content/</Text> 
+      {dataArray.map(e => {
+        return (
+          <View>
+            <Text>{e.date}</Text>
+            <Text>{e.placed_at}</Text>
+            <Text>{e.user_id}</Text>
+            <Text>{e.date}</Text>
+          </View>
+        );
+      })}
       {/* {
         allrentmachinedata.map((e)=>{
           // if(allrentmachinedata.BookedStatus==true)
@@ -41,11 +42,13 @@ const ViewRentedMachines = () => {
         })
       } */}
     </ScreenWrapper>
-  )
-}
+  ) : (
+    <View>
+      <Text>Loading</Text>
+    </View>
+  );
+};
 
-export default ViewRentedMachines
+export default ViewRentedMachines;
 
-const styles = StyleSheet.create({
-  
-})
+const styles = StyleSheet.create({});

@@ -9,38 +9,37 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
-import { useDispatch } from 'react-redux';
-import * as ImagePicker from 'react-native-image-picker'
+import {useSelector} from 'react-redux';
+import {RootState} from '../../app/store';
+import {useDispatch} from 'react-redux';
+import * as ImagePicker from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import { setURLimage } from '../users/imageSlice';
+import {setURLimage} from '../admin/Slices/imageSlice';
 import * as Progress from 'react-native-progress';
 export default function UploadScreen() {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
-  const {currUser, loading}= useSelector((state) => state.user);
-const dispatch= useDispatch()
-useEffect(()=>{
-  console.log(currUser, "From the upload thibng" )
-},[currUser])
+  const {currUser, loading} = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(currUser, 'From the upload thibng');
+  }, [currUser]);
   const uploadImage = async () => {
-    const { uri } = image;
-  const filename = uri.substring(uri.lastIndexOf('/') + 1);
-  const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-  setUploading(true);
-  setTransferred(0);
-  try {
-    const ref=storage().ref(filename)
-    await ref.putFile(uploadUri);
-    const downloadUrl=await ref.getDownloadURL()
-    console.log(downloadUrl)
-    dispatch(setURLimage(downloadUrl))
-  } catch (error) {
-    console.log(error)
-    
-  }
+    const {uri} = image;
+    const filename = uri.substring(uri.lastIndexOf('/') + 1);
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+    setUploading(true);
+    setTransferred(0);
+    try {
+      const ref = storage().ref(filename);
+      await ref.putFile(uploadUri);
+      const downloadUrl = await ref.getDownloadURL();
+      console.log(downloadUrl);
+      dispatch(setURLimage(downloadUrl));
+    } catch (error) {
+      console.log(error);
+    }
 
     // set progress state
 
@@ -51,7 +50,7 @@ useEffect(()=>{
     );
     setImage(null);
   };
-  const selectImage = async() => {
+  const selectImage = async () => {
     const options = {
       maxWidth: 2000,
       maxHeight: 2000,
@@ -61,25 +60,21 @@ useEffect(()=>{
       },
     };
     try {
-      
-     const response= await ImagePicker.launchImageLibrary(options)
-     console.log(response.assets[0].uri)
-        console.log("yeh")
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else if (response.customButton) {
-          console.log('User tapped custom button: ', response.customButton);
-        } else {
-          const source = {uri: response.assets[0].uri};
-          console.log(source);
-          setImage(source);
-        }
-        
-    } catch (error) {
-      
-    }
+      const response = await ImagePicker.launchImageLibrary(options);
+      console.log(response.assets[0].uri);
+      console.log('yeh');
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = {uri: response.assets[0].uri};
+        console.log(source);
+        setImage(source);
+      }
+    } catch (error) {}
   };
   return (
     <SafeAreaView style={styles.container}>
