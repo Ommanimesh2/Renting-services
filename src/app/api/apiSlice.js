@@ -42,7 +42,8 @@ const baseQuery = fetchBaseQuery({
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({baseUrl: 'http://127.0.0.1:8000'}),
+  baseQuery: fetchBaseQuery({baseUrl: 'https://ommanimesh.pythonanywhere.com'}),
+  tagTypes: ['Machines', 'User'],
   endpoints: builder => ({
     signUp: builder.mutation({
       query: initialPost => ({
@@ -50,6 +51,7 @@ export const apiSlice = createApi({
         method: 'POST',
         body: initialPost,
       }),
+      providesTags: ['User'],
     }),
     login: builder.mutation({
       query: initialPost => ({
@@ -57,6 +59,7 @@ export const apiSlice = createApi({
         method: 'POST',
         body: initialPost,
       }),
+      providesTags: ['User'],
     }),
     newAccessToken: builder.mutation({
       query: initialPost => ({
@@ -71,17 +74,22 @@ export const apiSlice = createApi({
         method: 'POST',
         body: initialPost,
       }),
+      invalidatesTags: ['Machines'],
     }),
+
     postBookedStatus: builder.mutation({
       query: initialPatch => ({
         url: `/api/rentdata/${machineId}/`,
         method: 'PATCH',
         body: initialPatch,
       }),
+      invalidatesTags: ['Machines'],
     }),
 
     getAllRentMachines: builder.query({
       query: () => '/api/rentmachine/',
+      transformResponse: res => res.sort((a, b) => b.id - a.id),
+      providesTags: ['Machines'],
     }),
 
     getAllOrders: builder.query({
@@ -89,6 +97,10 @@ export const apiSlice = createApi({
     }),
     getRentMachine: builder.query({
       query: machineId => `/api/rentdata/${machineId}`,
+      invalidatesTags: ['Machines'],
+    }),
+    getOrderUser: builder.query({
+      query: machineId => `/user/${machineId}/`,
     }),
 
     updateRentMachine: builder.mutation({
@@ -98,14 +110,16 @@ export const apiSlice = createApi({
         // Include the entire post object as the body of the request
         body: machine,
       }),
+      invalidatesTags: ['Machines'],
     }),
     deleteRentMachine: builder.mutation({
       query: ({id}) => ({
-        url: `/api/rentdata/${id}/`,
+        url: `/api/rentdata/${id}`,
         method: 'DELETE',
         // Include the entire post object as the body of the request
         body: id,
       }),
+      invalidatesTags: ['Machines'],
     }),
   }),
 });
@@ -120,4 +134,5 @@ export const {
   useLoginMutation,
   useGetAllOrdersQuery,
   useNewAccessTokenMutation,
+  useGetOrderUserQuery,
 } = apiSlice;

@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#bbded6',
   },
   selectButton: {
     borderRadius: 5,
@@ -120,7 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffb6b9',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop: 10,
   },
   buttonText: {
     color: 'white',

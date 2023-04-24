@@ -9,7 +9,10 @@ import {
 import React, {useEffect} from 'react';
 
 import {useContext, useState} from 'react';
-import {useSignUpMutation, useGetAllRentMachinesQuery} from '../../app/api/apiSlice';
+import {
+  useSignUpMutation,
+  useGetAllRentMachinesQuery,
+} from '../../app/api/apiSlice';
 
 const Signup = ({navigation}) => {
   const [user, setUser] = useState('');
@@ -17,25 +20,28 @@ const Signup = ({navigation}) => {
   const [email, setEmail] = useState('');
 
   const [signUp, {isLoading}] = useSignUpMutation();
-  const { data: machines, isSuccess, error } = useGetAllRentMachinesQuery()
-  const handleClick = async (user,email,password) => {
+  const {data: machines, isSuccess, error} = useGetAllRentMachinesQuery();
+  const handleClick = async (user, email, password) => {
     try {
-      const resp =await signUp({username:user, email:email, password:password})
+      const resp = await signUp({
+        username: user,
+        email: email,
+        password: password,
+      });
       console.log(resp);
-      navigation.navigate("login")
-      setEmail('')
-      setPwd('')
-      setEmail('')
+      navigation.navigate('login');
+      setEmail('');
+      setPwd('');
+      setEmail('');
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
   };
   let content;
-  if(isSuccess){
-    content= JSON.stringify(machines)
-  }else if(error){
-    content= JSON.stringify(error)
-
+  if (isSuccess) {
+    content = JSON.stringify(machines);
+  } else if (error) {
+    content = JSON.stringify(error);
   }
   return (
     <View>
@@ -72,14 +78,21 @@ const Signup = ({navigation}) => {
         <Pressable
           style={styles.signbutton}
           onPress={() => {
-            handleClick(user,email,pwd);
+            handleClick(user, email, pwd);
           }}>
           <Text>Sign Up</Text>
         </Pressable>
       </View>
       <Text style={styles.last}>
         Already have an account?
-        <Text onPress={() => navigation.navigate('login')}>Log in</Text>
+        <Text
+          style={{
+            color: 'blue',
+            textDecorationLine: 'underline',
+          }}
+          onPress={() => navigation.navigate('login')}>
+          Log in
+        </Text>
       </Text>
     </View>
   );

@@ -10,6 +10,7 @@ import Login from './src/features/Login';
 import Signup from './src/features/Signup';
 import AdminRoutes from './src/app/routes/AdminRoutes';
 import UniqueProductScreen from './src/features/admin/UniqueProductScreen';
+import UniqueOrder from './src/features/admin/UniqueOrder';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(false);
@@ -43,6 +44,12 @@ const App = () => {
                 component={UniqueProductScreen}
                 options={{headerShown: false}}
               />
+              <Stack.Screen
+                name="uniqueOrder"
+                initialParams={{orderId: 21}}
+                component={UniqueOrder}
+                options={{headerShown: false}}
+              />
             </>
           ) : (
             <>
@@ -65,6 +72,12 @@ const App = () => {
                 name="uniqueMachine"
                 initialParams={{itemId: 21}}
                 component={UniqueProductScreen}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="uniqueOrder"
+                initialParams={{orderId: 21}}
+                component={UniqueOrder}
                 options={{headerShown: false}}
               />
             </>

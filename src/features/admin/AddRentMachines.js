@@ -18,7 +18,7 @@ import * as ImagePicker from 'react-native-image-picker';
 import {usePostRentMachinesMutation} from '../../app/api/apiSlice';
 import UploadScreen from '../UploadScreen/UploadScreen';
 import {useSelector} from 'react-redux';
-const AddRentMachines = () => {
+const AddRentMachines = ({navigation}) => {
   var launchImageLibrary = require('react-native-image-picker');
   const {currUser, loading} = useSelector(state => state.user);
   const {image} = useSelector(state => state.image);
@@ -96,6 +96,7 @@ const AddRentMachines = () => {
       setMachineDetails('');
       setBookedStatus('');
       setName('');
+      navigation.navigate('ViewRentMachines');
     } catch (error) {
       console.log('Error:', error);
       if (error.response && error.response.data) {

@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   Pressable,
   StyleSheet,
   Text,
@@ -33,7 +34,14 @@ const Login = ({navigation}: any) => {
       console.log(userData);
       dispatch(setCurrUser(userData.data.user));
       setCredentials(userData.data.tokens);
-      navigation.navigate('adminRoutes');
+
+      setPwd('');
+      setUser('');
+      if (user === '' || pwd === '') {
+        Alert.alert('Please enter credentials');
+      } else {
+        navigation.navigate('adminRoutes');
+      }
     } catch (err) {
       console.log(err);
     }
@@ -61,22 +69,25 @@ const Login = ({navigation}: any) => {
         onChangeText={text => setPwd(text)}
         value={pwd}
       />
-      <Pressable onPress={() => console.log(getCredentials())}>
-        <Text>THis to get creds</Text>
-      </Pressable>
       <View>
         <Pressable
           style={styles.signbutton}
           onPress={e => {
             handleSubmit(e);
-            navigation.navigate('adminRoutes');
           }}>
           <Text>Login</Text>
         </Pressable>
       </View>
       <Text style={styles.last}>
         dont have an account?
-        <Text onPress={() => navigation.navigate('signup')}>Create One</Text>
+        <Text
+          style={{
+            color: 'blue',
+            textDecorationLine: 'underline',
+          }}
+          onPress={() => navigation.navigate('signup')}>
+          Create One
+        </Text>
       </Text>
     </View>
   );
