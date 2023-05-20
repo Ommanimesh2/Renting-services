@@ -17,17 +17,17 @@ const App = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(false);
 
-  // useEffect(() => {
-  //   setTimeout(async () => {
-  //     const keys: any = await getCredentials();
-  //     console.log(' thes are keys', keys);
-  //     if (!keys) {
-  //       setIsAuth(false);
-  //     } else {
-  //       setIsAuth(true);
-  //     }
-  //   }, 1000);
-  // }, [isAuth]);
+  useEffect(() => {
+    setTimeout(async () => {
+      const keys: any = await getCredentials();
+      console.log(' thes are keys', keys);
+      if (!keys) {
+        setIsAuth(false);
+      } else {
+        setIsAuth(true);
+      }
+    }, 1000);
+  }, [isAuth]);
 
   return (
     <Provider store={store}>
