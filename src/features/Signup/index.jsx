@@ -2,23 +2,25 @@ import {
   StyleSheet,
   Text,
   View,
-  Pressable,
+  TouchableOpacity,
   TextInput,
   Alert,
 } from 'react-native';
 import React, {useEffect} from 'react';
-
+import ScreenWrapper from '../../app/components/ScreenWrapper';
 import {useContext, useState} from 'react';
 import {
   useSignUpMutation,
   useGetAllRentMachinesQuery,
 } from '../../app/api/apiSlice';
+import {Pressable} from '@react-native-material/core';
 
 const Signup = ({navigation}) => {
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
   const [email, setEmail] = useState('');
-
+  const [emailMsg, setemailMsg] = useState('');
+  const [pwdMsg, setpwdMsg] = useState('');
   const [signUp, {isLoading}] = useSignUpMutation();
   const {data: machines, isSuccess, error} = useGetAllRentMachinesQuery();
   const handleClick = async (user, email, password) => {
@@ -37,6 +39,20 @@ const Signup = ({navigation}) => {
       console.log(error);
     }
   };
+  const CheckValidation = () => {
+    // <= Added this function
+    const strongRegex = new RegExp(
+      '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
+    );
+
+    if (!strongRegex.test(email) && email != '') {
+      setemailMsg('invalid email');
+      return false;
+    } else if (pwd.length < 8 && pwd != '') {
+      setpwdMsg('Password too short');
+      return false;
+    }
+  };
   let content;
   if (isSuccess) {
     content = JSON.stringify(machines);
@@ -44,57 +60,88 @@ const Signup = ({navigation}) => {
     content = JSON.stringify(error);
   }
   return (
-    <View>
-      <Text style={styles.signheading}>Create your Account</Text>
-      <TextInput
-        style={styles.input}
-        underlineColorAndroid="transparent"
-        placeholder="username"
-        placeholderTextColor="rgba(0, 0, 0, 0.7)"
-        autoCapitalize="none"
-        onChangeText={text => setUser(text)}
-        value={user}
-      />
-      <TextInput
-        style={styles.input}
-        underlineColorAndroid="transparent"
-        placeholder="Email"
-        placeholderTextColor="rgba(0, 0, 0, 0.7)"
-        autoCapitalize="none"
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-
-      <TextInput
-        style={styles.input}
-        underlineColorAndroid="transparent"
-        placeholder="password"
-        placeholderTextColor="rgba(0, 0, 0, 0.7)"
-        autoCapitalize="none"
-        onChangeText={text => setPwd(text)}
-        value={pwd}
-      />
+    <ScreenWrapper>
       <View>
-        <Pressable
+        <Text style={styles.signheading}>Create your Account</Text>
+        <TextInput
+          style={styles.input}
+          underlineColorAndroid="transparent"
+          placeholder="username"
+          placeholderTextColor="rgba(0, 0, 0, 0.7)"
+          autoCapitalize="none"
+          onChangeText={text => setUser(text)}
+          value={user}
+        />
+
+        <TextInput
+          style={styles.input}
+          underlineColorAndroid="transparent"
+          placeholder="Email"
+          placeholderTextColor="rgba(0, 0, 0, 0.7)"
+          autoCapitalize="none"
+          onChangeText={text => setEmail(text)}
+          value={email}
+        />
+        {emailMsg ? (
+          <Text style={styles.error}>{emailMsg}</Text>
+        ) : (
+          <View></View>
+        )}
+        <TextInput
+          style={styles.input}
+          underlineColorAndroid="transparent"
+          placeholder="password"
+          placeholderTextColor="rgba(0, 0, 0, 0.7)"
+          autoCapitalize="none"
+          secureTextEntry={true}
+          onChangeText={text => setPwd(text)}
+          value={pwd}
+        />
+        {pwdMsg ? (
+          <Text style={styles.error}>{pwdMsg}</Text>
+        ) : (
+          <Text>asjdflasdfj</Text>
+        )}
+        <View>
+          {/* <Pressable
           style={styles.signbutton}
           onPress={() => {
-            handleClick(user, email, pwd);
+           
           }}>
           <Text>Sign Up</Text>
-        </Pressable>
-      </View>
-      <Text style={styles.last}>
-        Already have an account?
-        <Text
-          style={{
-            color: 'blue',
-            textDecorationLine: 'underline',
-          }}
-          onPress={() => navigation.navigate('login')}>
-          Log in
+        </Pressable> */}
+          <Pressable
+            onPress={() => {
+              if (CheckValidation()) {
+                handleClick(user, email, pwd);
+              } else {
+                Alert.alert('Please check credentials again');
+              }
+            }}
+            style={styles.mainBtn}>
+            <View>
+              <Text
+                style={{
+                  color: 'white',
+                }}>
+                Login
+              </Text>
+            </View>
+          </Pressable>
+        </View>
+        <Text style={styles.last}>
+          Already have an account?
+          <Text
+            style={{
+              color: 'blue',
+              textDecorationLine: 'underline',
+            }}
+            onPress={() => navigation.navigate('login')}>
+            Log in
+          </Text>
         </Text>
-      </Text>
-    </View>
+      </View>
+    </ScreenWrapper>
   );
 };
 
@@ -110,18 +157,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
-    marginTop: 167,
+    marginTop: 127,
     marginBottom: 40,
   },
   input: {
-    margin: 15,
+    marginTop: 15,
     // marginTop:40,
-    height: 66,
+    height: 50,
     borderColor: '#7a42f4',
     borderWidth: 1,
     backgroundColor: '#FFFFFF',
-
-    borderRadius: 10,
     padding: 15,
   },
 
@@ -148,5 +193,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
+  },
+  mainBtn: {
+    width: 328,
+    height: 50,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0F623D',
+    marginHorizontal: 16,
+    marginTop: 65,
+  },
+  error: {
+    color: 'red',
   },
 });

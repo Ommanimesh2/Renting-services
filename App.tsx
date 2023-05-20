@@ -11,21 +11,23 @@ import Signup from './src/features/Signup';
 import AdminRoutes from './src/app/routes/AdminRoutes';
 import UniqueProductScreen from './src/features/admin/UniqueProductScreen';
 import UniqueOrder from './src/features/admin/UniqueOrder';
+import MainLogin from './src/features/MainLogin';
+
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(false);
 
-  useEffect(() => {
-    setTimeout(async () => {
-      const keys: any = await getCredentials();
-      console.log(' thes are keys', keys);
-      if (!keys) {
-        setIsAuth(false);
-      } else {
-        setIsAuth(true);
-      }
-    }, 1000);
-  }, [isAuth]);
+  // useEffect(() => {
+  //   setTimeout(async () => {
+  //     const keys: any = await getCredentials();
+  //     console.log(' thes are keys', keys);
+  //     if (!keys) {
+  //       setIsAuth(false);
+  //     } else {
+  //       setIsAuth(true);
+  //     }
+  //   }, 1000);
+  // }, [isAuth]);
 
   return (
     <Provider store={store}>
@@ -53,6 +55,11 @@ const App = () => {
             </>
           ) : (
             <>
+              <Stack.Screen
+                name="MainLogin"
+                component={MainLogin}
+                options={{headerShown: false}}
+              />
               <Stack.Screen
                 name="signup"
                 component={Signup}

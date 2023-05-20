@@ -6,6 +6,7 @@ import {
   Text,
   Button,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {setLng, getLng} from '../../helpers/lang';
@@ -15,17 +16,33 @@ import {getCredentials, setCredentials} from '../../helpers/credentials';
 import {useDispatch, useSelector} from 'react-redux';
 import {setCurrUser} from '../admin/Slices/userSlice';
 import {useLoginMutation} from '../../app/api/apiSlice';
-
+import ScreenWrapper from '../../app/components/ScreenWrapper';
 import {RootState} from '../../app/store';
 import strings from '../../helpers/LocalisedStrings';
 const Login = ({navigation}: any) => {
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
-  const [errMsg, setErrMsg] = useState('');
+  const [emailMsg, setemailMsg] = useState('');
+  const [pwdMsg, setpwdMsg] = useState('');
   const dispatch = useDispatch();
   const {currUser, loading} = useSelector((state: RootState) => state.user);
   const handleLanguageChange = (lang: string) => {
     setLng(lang);
+  };
+
+  const CheckValidation = () => {
+    // <= Added this function
+    const strongRegex = new RegExp(
+      '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
+    );
+
+    if (!strongRegex.test(user) && user != '') {
+      setemailMsg('invalid email');
+      return false;
+    } else if (pwd.length < 8 && pwd != '') {
+      setpwdMsg('Password too short');
+      return false;
+    }
   };
   const selectedLng = async () => {
     const lngData = await getLng();
@@ -34,9 +51,7 @@ const Login = ({navigation}: any) => {
     }
   };
   const [login, {isLoading}] = useLoginMutation();
-  useEffect(() => {
-    setErrMsg('');
-  }, [user, pwd]);
+  useEffect(() => {}, [user, pwd]);
   useEffect(() => {
     selectedLng();
   });
@@ -62,52 +77,78 @@ const Login = ({navigation}: any) => {
   };
 
   return (
-    <View>
-      <Text style={styles.signheading}>Login</Text>
-      <TextInput
-        style={styles.input}
-        underlineColorAndroid="transparent"
-        placeholder="email"
-        placeholderTextColor="rgba(0, 0, 0, 0.7)"
-        autoCapitalize="none"
-        onChangeText={text => setUser(text)}
-        value={user}
-      />
+    <ScreenWrapper>
       <View>
-        <Text>Select the language</Text>
-        <Button title="hindi" onPress={() => handleLanguageChange('hi')} />
-        <Button title="English" onPress={() => handleLanguageChange('en')} />
-      </View>
-      <TextInput
-        style={styles.input}
-        underlineColorAndroid="transparent"
-        placeholder="password"
-        placeholderTextColor="rgba(0, 0, 0, 0.7)"
-        autoCapitalize="none"
-        onChangeText={text => setPwd(text)}
-        value={pwd}
-      />
-      <View>
-        <Pressable
-          style={styles.signbutton}
-          onPress={e => {
-            handleSubmit(e);
-          }}>
-          <Text>Login</Text>
-        </Pressable>
-      </View>
-      <Text style={styles.last}>
-        dont have an account?
-        <Text
-          style={{
-            color: 'blue',
-            textDecorationLine: 'underline',
+        <Text style={styles.signheading}>Login</Text>
+        <TextInput
+          style={styles.input}
+          underlineColorAndroid="transparent"
+          placeholder="email"
+          placeholderTextColor="rgba(0, 0, 0, 0.7)"
+          autoCapitalize="none"
+          onChangeText={text => {
+            setUser(text);
           }}
-          onPress={() => navigation.navigate('signup')}>
-          Create One
+          value={user}
+        />
+        {emailMsg ? (
+          <Text style={styles.error}>{emailMsg}</Text>
+        ) : (
+          <View></View>
+        )}
+
+        {/* <View>
+          <Text>Select the language</Text>
+          <Button title="hindi" onPress={() => handleLanguageChange('hi')} />
+          <Button title="English" onPress={() => handleLanguageChange('en')} />
+        </View> */}
+        <TextInput
+          style={styles.input}
+          underlineColorAndroid="transparent"
+          placeholder="password"
+          placeholderTextColor="rgba(0, 0, 0, 0.7)"
+          autoCapitalize="none"
+          secureTextEntry={true}
+          onChangeText={text => {
+            setPwd(text);
+          }}
+          value={pwd}
+        />
+        {pwdMsg ? <Text style={styles.error}>{pwdMsg}</Text> : <View></View>}
+
+        <View>
+          <Pressable
+            style={styles.mainBtn}
+            onPress={() => {
+              if (CheckValidation()) {
+                handleSubmit(e);
+              } else {
+                Alert.alert('Please check credentials again');
+              }
+            }}>
+            <View>
+              <Text
+                style={{
+                  color: 'white',
+                }}>
+                Login
+              </Text>
+            </View>
+          </Pressable>
+        </View>
+        <Text style={styles.last}>
+          dont have an account?
+          <Text
+            style={{
+              color: 'blue',
+              textDecorationLine: 'underline',
+            }}
+            onPress={() => navigation.navigate('signup')}>
+            Create One
+          </Text>
         </Text>
-      </Text>
-    </View>
+      </View>
+    </ScreenWrapper>
   );
 };
 
@@ -123,18 +164,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
-    marginTop: 167,
-    marginBottom: 40,
+    marginTop: 107,
+    marginBottom: 60,
   },
   input: {
-    margin: 15,
+    marginTop: 15,
     // marginTop:40,
-    height: 66,
+    height: 50,
     borderColor: '#7a42f4',
     borderWidth: 1,
     backgroundColor: '#FFFFFF',
-
-    borderRadius: 10,
     padding: 15,
   },
 
@@ -161,5 +200,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
+  },
+  mainBtn: {
+    width: 328,
+    height: 50,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0F623D',
+    marginHorizontal: 16,
+    marginTop: 65,
+  },
+  error: {
+    color: 'red',
   },
 });
