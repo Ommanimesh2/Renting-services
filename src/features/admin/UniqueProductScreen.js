@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
+import strings from '../../helpers/LocalisedStrings';
 import React from 'react';
 import {
   useGetRentMachineQuery,
@@ -47,13 +48,13 @@ const UniqueProductScreen = ({route, navigation}) => {
           />
           <View style={styles.container}>
             <Text style={styles.head}>{content.Name}</Text>
-            <Text style={styles.title}>Description</Text>
+            <Text style={styles.title}>{strings.MACHINE_DETAILS}</Text>
             <Text style={styles.input}>{content.MachineDetails}</Text>
-            <Text style={styles.title}>Contact Number</Text>
+            <Text style={styles.title}>{strings.PHONE_NUMBER}</Text>
             <Text style={styles.input}>{content.Contact}</Text>
-            <Text style={styles.title}>Price</Text>
+            <Text style={styles.title}>{strings.PRICE}</Text>
             <Text style={styles.input}>{content.Price}</Text>
-            <Text style={styles.title}>Date</Text>
+            <Text style={styles.title}>{strings.DATE}</Text>
             <Text style={styles.input}>{content.date}</Text>
           </View>
           <Button

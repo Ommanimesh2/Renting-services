@@ -1,6 +1,7 @@
 import {StyleSheet, Image, Text, View, Pressable} from 'react-native';
 import React from 'react';
 import {useDeleteRentMachineMutation} from '../api/apiSlice';
+import strings from '../../helpers/LocalisedStrings';
 import {useSelector} from 'react-redux';
 const StallCard = ({props, navigation}) => {
   const {Name, Price, date, rentimage, id} = props;
@@ -42,9 +43,6 @@ const StallCard = ({props, navigation}) => {
 
               <Text style={{fontSize: 15}}>{Price}</Text>
             </View>
-            <Text style={{fontSize: 12, paddingHorizontal: 17, paddingTop: 8}}>
-              alskdjfasdkjf
-            </Text>
             <Text style={{paddingHorizontal: 17}}>{date}</Text>
           </View>
           <View></View>

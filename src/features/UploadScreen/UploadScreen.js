@@ -14,6 +14,8 @@ import {RootState} from '../../app/store';
 import {useDispatch} from 'react-redux';
 import * as ImagePicker from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
+import strings from '../../helpers/LocalisedStrings';
+
 import {setURLimage} from '../admin/Slices/imageSlice';
 import * as Progress from 'react-native-progress';
 export default function UploadScreen() {
@@ -25,31 +27,6 @@ export default function UploadScreen() {
   useEffect(() => {
     console.log(currUser, 'From the upload thibng');
   }, [currUser]);
-  const uploadImage = async () => {
-    const {uri} = image;
-    const filename = uri.substring(uri.lastIndexOf('/') + 1);
-    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-    setUploading(true);
-    setTransferred(0);
-    try {
-      const ref = storage().ref(filename);
-      await ref.putFile(uploadUri);
-      const downloadUrl = await ref.getDownloadURL();
-      console.log(downloadUrl);
-      dispatch(setURLimage(downloadUrl));
-    } catch (error) {
-      console.log(error);
-    }
-
-    // set progress state
-
-    setUploading(false);
-    Alert.alert(
-      'Photo uploaded!',
-      'Your photo has been uploaded to Firebase Cloud Storage!',
-    );
-    setImage(null);
-  };
   const selectImage = async () => {
     const options = {
       maxWidth: 2000,
@@ -73,13 +50,34 @@ export default function UploadScreen() {
         const source = {uri: response.assets[0].uri};
         console.log(source);
         setImage(source);
+        const {uri} = source;
+        const filename = uri.substring(uri.lastIndexOf('/') + 1);
+        const uploadUri =
+          Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+        setUploading(true);
+        setTransferred(0);
+        try {
+          const ref = storage().ref('Images/' + filename);
+          await ref.putFile(uploadUri);
+          const downloadUrl = await ref.getDownloadURL();
+          console.log(downloadUrl);
+          dispatch(setURLimage(downloadUrl));
+        } catch (error) {
+          console.log(error);
+        }
+
+        // set progress state
+
+        setUploading(false);
+        Alert.alert('Photo uploaded!', 'The photo was uploaded successfully');
+        setImage(null);
       }
     } catch (error) {}
   };
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.selectButton} onPress={selectImage}>
-        <Text style={styles.buttonText}>Pick an image</Text>
+        <Text style={styles.buttonText}>{strings.PICK_AN_IMAGE}</Text>
       </TouchableOpacity>
       <View style={styles.imageContainer}>
         {image !== null ? (
@@ -90,9 +88,7 @@ export default function UploadScreen() {
             <Progress.Bar progress={transferred} width={300} />
           </View>
         ) : (
-          <TouchableOpacity style={styles.uploadButton} onPress={uploadImage}>
-            <Text style={styles.buttonText}>Upload image</Text>
-          </TouchableOpacity>
+          <View></View>
         )}
       </View>
     </SafeAreaView>
@@ -102,19 +98,20 @@ export default function UploadScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginVertical: 5,
     alignItems: 'center',
   },
   selectButton: {
-    borderRadius: 5,
-    width: 150,
-    height: 50,
-    backgroundColor: '#8ac6d1',
+    borderRadius: 10,
+    width: 310,
+    height: 56,
+    backgroundColor: '#00AC00',
     alignItems: 'center',
     justifyContent: 'center',
   },
   uploadButton: {
     borderRadius: 5,
-    width: 150,
+    width: 200,
     height: 50,
     backgroundColor: '#ffb6b9',
     alignItems: 'center',

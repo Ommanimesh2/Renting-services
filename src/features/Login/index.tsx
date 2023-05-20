@@ -4,28 +4,42 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  Button,
   TextInput,
   View,
 } from 'react-native';
+import {setLng, getLng} from '../../helpers/lang';
 import React from 'react';
 import {useRef, useState, useEffect} from 'react';
 import {getCredentials, setCredentials} from '../../helpers/credentials';
 import {useDispatch, useSelector} from 'react-redux';
 import {setCurrUser} from '../admin/Slices/userSlice';
 import {useLoginMutation} from '../../app/api/apiSlice';
+
 import {RootState} from '../../app/store';
+import strings from '../../helpers/LocalisedStrings';
 const Login = ({navigation}: any) => {
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const dispatch = useDispatch();
   const {currUser, loading} = useSelector((state: RootState) => state.user);
-
+  const handleLanguageChange = (lang: string) => {
+    setLng(lang);
+  };
+  const selectedLng = async () => {
+    const lngData = await getLng();
+    if (!!lngData) {
+      strings.setLanguage(lngData);
+    }
+  };
   const [login, {isLoading}] = useLoginMutation();
   useEffect(() => {
     setErrMsg('');
   }, [user, pwd]);
-
+  useEffect(() => {
+    selectedLng();
+  });
   const handleSubmit = async (e: {preventDefault: () => void}) => {
     e.preventDefault();
 
@@ -33,7 +47,7 @@ const Login = ({navigation}: any) => {
       const userData: any = await login({email: user, password: pwd});
       console.log(userData);
       dispatch(setCurrUser(userData.data.user));
-      setCredentials(userData.data.tokens);
+      setCredentials(userData.data.user);
 
       setPwd('');
       setUser('');
@@ -59,7 +73,11 @@ const Login = ({navigation}: any) => {
         onChangeText={text => setUser(text)}
         value={user}
       />
-
+      <View>
+        <Text>Select the language</Text>
+        <Button title="hindi" onPress={() => handleLanguageChange('hi')} />
+        <Button title="English" onPress={() => handleLanguageChange('en')} />
+      </View>
       <TextInput
         style={styles.input}
         underlineColorAndroid="transparent"

@@ -3,6 +3,7 @@ import {
   TextInput,
   Pressable,
   Text,
+  TouchableOpacity,
   View,
   Button,
   Alert,
@@ -11,6 +12,7 @@ import React from 'react';
 import {useState} from 'react';
 import ScreenWrapper from '../../app/components/ScreenWrapper';
 import {ScrollView} from 'react-native';
+import strings from '../../helpers/LocalisedStrings';
 import Header from '../../app/components/Header';
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-date-picker';
@@ -113,7 +115,7 @@ const AddRentMachines = ({navigation}) => {
             <Header text="Add Machine on Rent" />{' '}
           </Text>
           <View style={styles.bodynewjob}>
-            <Text style={styles.newjobinputtext}>Name</Text>
+            <Text style={styles.newjobinputtext}>{strings.NAME}</Text>
             <TextInput
               onChangeText={text => setName(text)}
               value={name}
@@ -125,7 +127,7 @@ const AddRentMachines = ({navigation}) => {
               autoCapitalize="none"
             />
 
-            <Text style={styles.newjobinputtext}>Price</Text>
+            <Text style={styles.newjobinputtext}>{strings.PRICE}</Text>
             <TextInput
               onChangeText={text => setPrice(text)}
               value={price}
@@ -137,7 +139,7 @@ const AddRentMachines = ({navigation}) => {
               placeholderFontSize="20"
               autoCapitalize="none"
             />
-            <Text style={styles.newjobinputtext}>Location</Text>
+            <Text style={styles.newjobinputtext}>{strings.LOCATION}</Text>
             <TextInput
               editable={false}
               style={styles.newjobinput}
@@ -148,7 +150,9 @@ const AddRentMachines = ({navigation}) => {
               autoCapitalize="none"
             />
             <View style={styles.flexcolumn}>
-              <Text style={styles.newjobinputtext}>Machine Details</Text>
+              <Text style={styles.newjobinputtext}>
+                {strings.MACHINE_DETAILS}
+              </Text>
               <TextInput
                 onChangeText={text => setMachineDetails(text)}
                 value={machineDetails}
@@ -161,7 +165,7 @@ const AddRentMachines = ({navigation}) => {
               />
             </View>
             <View style={styles.flexcolumn}>
-              <Text style={styles.newjobinputtext}>Phone Number</Text>
+              <Text style={styles.newjobinputtext}>{strings.PHONE_NUMBER}</Text>
               <TextInput
                 onChangeText={val => setContact(val)}
                 style={styles.newjobinput}
@@ -174,7 +178,7 @@ const AddRentMachines = ({navigation}) => {
                 autoCapitalize="none"
               />
             </View>
-            <Text style={styles.newjobinputtext}>Booked Status</Text>
+            <Text style={styles.newjobinputtext}>{strings.BOOKED_STATUS}</Text>
             <Picker
               selectedValue={bookedstatus}
               style={{height: 50, width: 150}}
@@ -183,8 +187,12 @@ const AddRentMachines = ({navigation}) => {
               <Picker.Item label="False" value="False" />
             </Picker>
           </View>
-          <Text style={styles.newjobinputtext}>Choose Date</Text>
-          <Button title="Open" onPress={() => setOpen(true)} />
+          <Text style={styles.newjobinputtext}>{strings.CHOOSE_DATE}</Text>
+          <TouchableOpacity
+            style={styles.addjobbutton}
+            onPress={() => setOpen(true)}>
+            <Text style={styles.buttonText}>Choose a date here</Text>
+          </TouchableOpacity>
           <DatePicker
             modal
             mode="date"
@@ -199,6 +207,7 @@ const AddRentMachines = ({navigation}) => {
               setOpen(false);
             }}
           />
+          <Text style={styles.newjobinputtext}>Pick image</Text>
           <UploadScreen />
           <Pressable
             style={styles.addjobbutton}
@@ -213,7 +222,7 @@ const AddRentMachines = ({navigation}) => {
                 date,
               );
             }}>
-            <Text style={styles.addjobtext}>Add Machines</Text>
+            <Text style={styles.addjobtext}>{strings.ADD_MACHINES}</Text>
           </Pressable>
         </View>
       </ScreenWrapper>
@@ -226,7 +235,6 @@ export default AddRentMachines;
 const styles = StyleSheet.create({
   newjobinput: {
     marginLeft: 16,
-    // marginTop:40,
     height: 56,
     borderColor: '#7a42f4',
     borderWidth: 1,
@@ -239,6 +247,20 @@ const styles = StyleSheet.create({
   flexcolumn: {
     display: 'flex',
     flexDirection: 'column',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  selectButton: {
+    borderRadius: 5,
+    width: 350,
+    height: 50,
+    marginVertical: 15,
+    backgroundColor: '#00AC00',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   jobheader: {
     marginLeft: -50,

@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View, Button} from 'react-native';
 import React from 'react';
-
+import strings from '../../helpers/LocalisedStrings';
 const OrderView = ({props, navigation}) => {
   const {payement_status, placed_at, date, payement_mode, machine_id, user_id} =
     props;
@@ -21,11 +21,11 @@ const OrderView = ({props, navigation}) => {
           paddingHorizontal: 5,
         }}>
         <View>
-          <Text style={styles.text}>Machine No</Text>
+          <Text style={styles.text}>{strings.MACHINE_NO}</Text>
           <Text>{machine_id}</Text>
         </View>
         <View>
-          <Text style={styles.text}>Placed At</Text>
+          <Text style={styles.text}>{strings.PLACED_AT}</Text>
           <Text>{placed_at}</Text>
         </View>
       </View>

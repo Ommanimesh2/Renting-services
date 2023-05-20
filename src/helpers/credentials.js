@@ -4,7 +4,7 @@ var jwt_decode = require('jwt-decode');
 
 async function getAccessUsingRefresh(refreshToken) {
   console.log(refreshToken);
-  return fetch('http://127.0.0.1:8000/jwt/refresh/', {
+  return fetch('https://ommanimesh.pythonanywhere.com/jwt/refresh/', {
     method: 'POST',
 
     headers: {
@@ -15,7 +15,7 @@ async function getAccessUsingRefresh(refreshToken) {
 }
 
 async function checkIfValidAcess(accessToken) {
-  return fetch('http://127.0.0.1:8000/jwt/verify/', {
+  return fetch('https://ommanimesh.pythonanywhere.com/jwt/verify/', {
     method: 'POST',
 
     headers: {
@@ -79,9 +79,9 @@ function isTokenExpired(token) {
   }
 }
 
-const setCredentials = async keys => {
+const setCredentials = async user => {
   try {
-    await AsyncStorage.setItem('keys', JSON.stringify(keys));
+    await AsyncStorage.setItem('user', JSON.stringify(user));
     console.log('successfully saved');
   } catch (e) {
     console.log(e);
@@ -90,14 +90,12 @@ const setCredentials = async keys => {
 
 const getCredentials = async () => {
   try {
-    let credentials = await AsyncStorage.getItem('keys');
-
-    let cred = await getVerifiedKeys(JSON.parse(credentials));
-
-    if (credentials != null && cred != null) {
-      console.log('yehi hai');
-      console.log(cred);
-      return cred;
+    let credentials = await AsyncStorage.getItem('user');
+    let user = await JSON.parse(credentials);
+    // let cred = await getVerifiedKeys(JSON.parse(credentials));
+    if (user) {
+      console.log(user);
+      return user;
     } else {
       return null;
     }

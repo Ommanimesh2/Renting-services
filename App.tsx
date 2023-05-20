@@ -19,7 +19,7 @@ const App = () => {
     setTimeout(async () => {
       const keys: any = await getCredentials();
       console.log(' thes are keys', keys);
-      if (keys?.access == null) {
+      if (!keys) {
         setIsAuth(false);
       } else {
         setIsAuth(true);
