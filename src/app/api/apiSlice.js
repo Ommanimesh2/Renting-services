@@ -88,7 +88,7 @@ export const apiSlice = createApi({
 
     getAllRentMachines: builder.query({
       query: () => '/api/rentmachine/',
-      transformResponse: res => res.sort((a, b) => b.id - a.id),
+      // transformResponse: res => res.sort((a, b) => b.id - a.id),
       providesTags: ['Machines'],
     }),
 

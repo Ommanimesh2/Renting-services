@@ -14,7 +14,6 @@ import React from 'react';
 import {useRef, useState, useEffect} from 'react';
 import {getCredentials, setCredentials} from '../../helpers/credentials';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCurrUser} from '../admin/Slices/userSlice';
 import {useLoginMutation} from '../../app/api/apiSlice';
 import ScreenWrapper from '../../app/components/ScreenWrapper';
 import {RootState} from '../../app/store';
@@ -24,63 +23,114 @@ const Login = ({navigation}: any) => {
   const [pwd, setPwd] = useState('');
   const [emailMsg, setemailMsg] = useState('');
   const [pwdMsg, setpwdMsg] = useState('');
+  const [errMsg, seterrMsg] = useState('');
   const dispatch = useDispatch();
-  const {currUser, loading} = useSelector((state: RootState) => state.user);
+  const [canSubmit, setCanSubmit] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleLanguageChange = (lang: string) => {
     setLng(lang);
   };
+  useEffect(() => {
+    console.log(' language change');
+  }, []);
 
   const CheckValidation = () => {
     // <= Added this function
+    seterrMsg('');
     const strongRegex = new RegExp(
       '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
     );
-
     if (!strongRegex.test(user) && user != '') {
       setemailMsg('invalid email');
-      return false;
-    } else if (pwd.length < 8 && pwd != '') {
+      setCanSubmit(false);
+    } else if (user == '') {
+      setemailMsg('');
+    } else if (pwd.length < 4 && pwd != '') {
       setpwdMsg('Password too short');
-      return false;
+      setCanSubmit(false);
+    } else if (pwd.length > 4 && strongRegex.test(user)) {
+      setCanSubmit(true);
+      setpwdMsg('');
+      setemailMsg('');
+    } else if (strongRegex.test(user) && pwd.length < 4) {
+      setemailMsg('');
+      setpwdMsg('Password too short');
+      setCanSubmit(false);
+    } else if (!strongRegex.test(user) && pwd.length > 4) {
+      setpwdMsg('');
+      setCanSubmit(false);
+
+      setemailMsg('invalid email');
+    } else {
+      console.log('yaha');
+      setCanSubmit(false);
     }
   };
+  const checkEmail = user => {
+    const strongRegex = new RegExp(
+      '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
+    );
+    if (!strongRegex.test(user)) {
+      setemailMsg('invalid email');
+      setCanSubmit(false);
+    } else {
+      setCanSubmit(true);
+      setemailMsg('');
+    }
+  };
+  const checkPassword = password => {
+    if (password.length < 8) {
+      setpwdMsg('password too short');
+      setCanSubmit(false);
+    } else {
+      setpwdMsg('');
+    }
+  };
+
   const selectedLng = async () => {
     const lngData = await getLng();
     if (!!lngData) {
       strings.setLanguage(lngData);
     }
   };
-  const [login, {isLoading}] = useLoginMutation();
-  useEffect(() => {}, [user, pwd]);
+  const [login, {isLoading, isError}] = useLoginMutation();
   useEffect(() => {
     selectedLng();
   });
   const handleSubmit = async (e: {preventDefault: () => void}) => {
     e.preventDefault();
+    console.log('chala');
+    setLoading(true);
 
     try {
-      const userData: any = await login({email: user, password: pwd});
+      const userData: any = await login({email: user.trim(), password: pwd});
       console.log(userData);
-      dispatch(setCurrUser(userData.data.user));
-      setCredentials(userData.data.user);
-
-      setPwd('');
-      setUser('');
-      if (user === '' || pwd === '') {
-        Alert.alert('Please enter credentials');
-      } else {
+      setLoading(false);
+      if (userData.data?.user) {
+        setCredentials(userData.data.user);
+        setPwd('');
+        setUser('');
         navigation.navigate('adminRoutes');
+      } else if (userData.data.message) {
+        setPwd('');
+        setUser('');
+        seterrMsg('The email or password is incorrect');
+      } else if (user === '' || pwd === '') {
+        Alert.alert('Please enter credentials');
       }
     } catch (err) {
-      console.log(err);
+      Alert.alert('The email or password is incorrect');
     }
   };
-
+  useEffect(() => {
+    console.log(canSubmit);
+  }, [canSubmit]);
   return (
     <ScreenWrapper>
       <View>
-        <Text style={styles.signheading}>Login</Text>
+        <Text style={styles.signheading}>{strings.LOGIN}</Text>
         <TextInput
+          editable={!loading}
           style={styles.input}
           underlineColorAndroid="transparent"
           placeholder="email"
@@ -88,21 +138,17 @@ const Login = ({navigation}: any) => {
           autoCapitalize="none"
           onChangeText={text => {
             setUser(text);
+            checkEmail(text);
           }}
           value={user}
         />
-        {emailMsg ? (
+        {emailMsg != '' ? (
           <Text style={styles.error}>{emailMsg}</Text>
         ) : (
           <View></View>
         )}
-
-        {/* <View>
-          <Text>Select the language</Text>
-          <Button title="hindi" onPress={() => handleLanguageChange('hi')} />
-          <Button title="English" onPress={() => handleLanguageChange('en')} />
-        </View> */}
         <TextInput
+          editable={!loading}
           style={styles.input}
           underlineColorAndroid="transparent"
           placeholder="password"
@@ -111,40 +157,41 @@ const Login = ({navigation}: any) => {
           secureTextEntry={true}
           onChangeText={text => {
             setPwd(text);
+            checkPassword(text);
           }}
           value={pwd}
         />
-        {pwdMsg ? <Text style={styles.error}>{pwdMsg}</Text> : <View></View>}
+        {pwdMsg != '' ? (
+          <Text style={styles.error}>{pwdMsg}</Text>
+        ) : (
+          <View></View>
+        )}
 
         <View>
           <Pressable
             style={styles.mainBtn}
-            onPress={() => {
-              if (CheckValidation()) {
-                handleSubmit(e);
-              } else {
-                Alert.alert('Please check credentials again');
-              }
-            }}>
+            disabled={pwdMsg === '' && emailMsg === '' ? false : true}
+            onPress={e => handleSubmit(e)}>
             <View>
               <Text
                 style={{
                   color: 'white',
                 }}>
-                Login
+                {strings.LOGIN}
               </Text>
             </View>
           </Pressable>
         </View>
+        {loading && <ActivityIndicator />}
+        {errMsg && <Text style={styles.errorMsg}>{errMsg}</Text>}
         <Text style={styles.last}>
-          dont have an account?
+          {strings.DONT_ACCOUNT}
           <Text
             style={{
               color: 'blue',
               textDecorationLine: 'underline',
-            }}
-            onPress={() => navigation.navigate('signup')}>
-            Create One
+            }}>
+            Contact us at bhoomicam.iitr@gmail.com
           </Text>
         </Text>
       </View>
@@ -202,7 +249,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   mainBtn: {
-    width: 328,
+    width: 324,
     height: 50,
     display: 'flex',
     alignItems: 'center',
@@ -213,5 +260,11 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
+  },
+  errorMsg: {
+    textAlign: 'center',
+    color: 'red',
+    fontSize: 15,
+    marginVertical: 10,
   },
 });

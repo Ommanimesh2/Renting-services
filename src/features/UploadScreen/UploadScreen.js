@@ -57,7 +57,7 @@ export default function UploadScreen() {
         setUploading(true);
         setTransferred(0);
         try {
-          const ref = storage().ref('Images/' + filename);
+          const ref = storage().ref(filename);
           await ref.putFile(uploadUri);
           const downloadUrl = await ref.getDownloadURL();
           console.log(downloadUrl);

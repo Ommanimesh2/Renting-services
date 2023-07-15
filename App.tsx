@@ -12,11 +12,11 @@ import AdminRoutes from './src/app/routes/AdminRoutes';
 import UniqueProductScreen from './src/features/admin/UniqueProductScreen';
 import UniqueOrder from './src/features/admin/UniqueOrder';
 import MainLogin from './src/features/MainLogin';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import UniqueQuery from './src/features/admin/UniqueQuery';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(false);
-
   useEffect(() => {
     setTimeout(async () => {
       const keys: any = await getCredentials();
@@ -50,6 +50,12 @@ const App = () => {
                 name="uniqueOrder"
                 initialParams={{orderId: 21}}
                 component={UniqueOrder}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="uniqueQuery"
+                initialParams={{user_id: 21}}
+                component={UniqueQuery}
                 options={{headerShown: false}}
               />
             </>

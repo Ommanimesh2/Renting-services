@@ -9,10 +9,7 @@ import {
 import React, {useEffect} from 'react';
 import ScreenWrapper from '../../app/components/ScreenWrapper';
 import {useContext, useState} from 'react';
-import {
-  useSignUpMutation,
-  useGetAllRentMachinesQuery,
-} from '../../app/api/apiSlice';
+import {useSignUpMutation} from '../../app/api/apiSlice';
 import {Pressable} from '@react-native-material/core';
 
 const Signup = ({navigation}) => {
@@ -22,12 +19,11 @@ const Signup = ({navigation}) => {
   const [emailMsg, setemailMsg] = useState('');
   const [pwdMsg, setpwdMsg] = useState('');
   const [signUp, {isLoading}] = useSignUpMutation();
-  const {data: machines, isSuccess, error} = useGetAllRentMachinesQuery();
   const handleClick = async (user, email, password) => {
     try {
       const resp = await signUp({
-        username: user,
-        email: email,
+        username: user.trim(),
+        email: email.trim(),
         password: password,
       });
       console.log(resp);
@@ -53,12 +49,7 @@ const Signup = ({navigation}) => {
       return false;
     }
   };
-  let content;
-  if (isSuccess) {
-    content = JSON.stringify(machines);
-  } else if (error) {
-    content = JSON.stringify(error);
-  }
+
   return (
     <ScreenWrapper>
       <View>
@@ -97,11 +88,7 @@ const Signup = ({navigation}) => {
           onChangeText={text => setPwd(text)}
           value={pwd}
         />
-        {pwdMsg ? (
-          <Text style={styles.error}>{pwdMsg}</Text>
-        ) : (
-          <Text>asjdflasdfj</Text>
-        )}
+        {pwdMsg ? <Text style={styles.error}>{pwdMsg}</Text> : <Text></Text>}
         <View>
           {/* <Pressable
           style={styles.signbutton}

@@ -19,7 +19,7 @@ const RentMachines = ({navigation}) => {
   } = useGetAllRentMachinesQuery();
   let content, db;
   if (isSuccess) {
-    db = Array.from(machines);
+    db = Array.from(machines.results);
     content = db.map(item => {
       return <StallCard key={item.id} props={item} navigation={navigation} />;
     });

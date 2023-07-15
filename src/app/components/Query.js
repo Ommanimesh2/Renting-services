@@ -1,9 +1,8 @@
 import {StyleSheet, Text, View, Button} from 'react-native';
 import React from 'react';
 import strings from '../../helpers/LocalisedStrings';
-const OrderView = ({props, navigation}) => {
-  const {payement_status, placed_at, date, payement_mode, machine_id, user_id} =
-    props;
+const Query = ({props, navigation}) => {
+  const {name, id, email, subject, message, user_id} = props;
 
   return (
     <View
@@ -21,21 +20,23 @@ const OrderView = ({props, navigation}) => {
           paddingHorizontal: 5,
         }}>
         <View>
-          <Text style={styles.text}>{strings.MACHINE_NO}</Text>
-          <Text>{machine_id}</Text>
+          <Text style={styles.text}>{strings.QUERY_NO}</Text>
+          <Text>{id}</Text>
         </View>
         <View>
-          <Text style={styles.text}>{strings.PLACED_AT}</Text>
-          <Text>{placed_at}</Text>
+          <Text style={styles.text}>{strings.USER_NAME}</Text>
+          <Text>{name}</Text>
         </View>
       </View>
       <Button
         onPress={() => {
-          navigation.navigate('uniqueOrder', {
-            orderId: user_id,
-            payement_status: payement_status,
-            placed_at: placed_at,
-            payement_mode: payement_mode,
+          navigation.navigate('uniqueQuery', {
+            user_id: user_id,
+            id: id,
+            name: name,
+            email: email,
+            subject: subject,
+            message: message,
           });
         }}
         title="Details"
@@ -46,7 +47,7 @@ const OrderView = ({props, navigation}) => {
   );
 };
 
-export default OrderView;
+export default Query;
 
 const styles = StyleSheet.create({
   text: {

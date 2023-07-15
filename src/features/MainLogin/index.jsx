@@ -32,18 +32,6 @@ const MainLogin = ({navigation}) => {
               </Text>
             </View>
           </Pressable>
-          <Pressable
-            style={styles.mainBtn}
-            onPress={() => navigation.navigate('signup')}>
-            <View>
-              <Text
-                style={{
-                  color: 'white',
-                }}>
-                Signup
-              </Text>
-            </View>
-          </Pressable>
         </View>
       </View>
     </ScreenWrapper>
