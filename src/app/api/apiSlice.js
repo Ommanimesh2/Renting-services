@@ -42,7 +42,7 @@ const baseQuery = fetchBaseQuery({
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({baseUrl: 'https://ommanimesh.pythonanywhere.com'}),
+  baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:8000/'}),
   tagTypes: ['Machines', 'User'],
   endpoints: builder => ({
     signUp: builder.mutation({
@@ -95,12 +95,18 @@ export const apiSlice = createApi({
     getAllOrders: builder.query({
       query: () => '/api/rentinfo/',
     }),
+    getAllQuery: builder.query({
+      query: () => '/api/query/',
+    }),
     getRentMachine: builder.query({
       query: machineId => `/api/rentdata/${machineId}`,
       invalidatesTags: ['Machines'],
     }),
     getOrderUser: builder.query({
       query: machineId => `/user/${machineId}/`,
+    }),
+    getAdminKvk: builder.query({
+      query: adminid => `/api/kvk_admin/${adminid}`,
     }),
 
     updateRentMachine: builder.mutation({
@@ -112,6 +118,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Machines'],
     }),
+
     deleteRentMachine: builder.mutation({
       query: ({id}) => ({
         url: `/api/rentdata/${id}`,
@@ -135,4 +142,6 @@ export const {
   useGetAllOrdersQuery,
   useNewAccessTokenMutation,
   useGetOrderUserQuery,
+  useGetAdminKvkQuery,
+  useGetAllQueryQuery,
 } = apiSlice;

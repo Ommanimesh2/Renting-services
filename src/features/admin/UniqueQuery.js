@@ -17,6 +17,7 @@ import {
 import ScreenWrapper from '../../app/components/ScreenWrapper';
 import Loading from './Loading';
 import {Button} from '@react-native-material/core';
+import Header from '../../app/components/Header';
 const UniqueQuery = ({route, navigation}) => {
   const {user_id, name, email, subject, message, id} = route.params;
   console.log(user_id, name, email, subject);
@@ -37,32 +38,35 @@ const UniqueQuery = ({route, navigation}) => {
     content = <Loading />;
   }
   return (
-    <ScreenWrapper>
-      {!isLoading ? (
-        <View>
-          <View style={styles.container}>
-            <Text style={styles.head}>
-              {' '}
-              {strings.QUERY_NO} : {id}
-            </Text>
-            <Text style={styles.title}>{strings.USER_NAME}</Text>
-            <Text style={styles.input}>{content?.username}</Text>
-            <Text style={styles.title}>{strings.PHONE_NUMBER}</Text>
-            <Text style={styles.input}>{content?.phone_no}</Text>
-            <Text style={styles.title}>{strings.EMAIL}</Text>
-            <Text style={styles.input}>{content?.email}</Text>
-            <Text style={styles.title}>{strings.ADDRESS}</Text>
-            <Text style={styles.input}>{content?.address}</Text>
-            <Text style={styles.title}>{strings.SUBJECT}</Text>
-            <Text style={styles.input}>{subject}</Text>
-            <Text style={styles.title}>{strings.MESSAGE}</Text>
-            <Text style={styles.input}>{message}</Text>
+    <>
+      <Header text="Query" />
+      <ScreenWrapper>
+        {!isLoading ? (
+          <View>
+            <View style={styles.container}>
+              <Text style={styles.head}>
+                {' '}
+                {strings.QUERY_NO} : {id}
+              </Text>
+              <Text style={styles.title}>{strings.USERNAME}</Text>
+              <Text style={styles.input}>{content?.username}</Text>
+              <Text style={styles.title}>{strings.PHONE_NUMBER}</Text>
+              <Text style={styles.input}>{content?.phone_no}</Text>
+              <Text style={styles.title}>{strings.EMAIL}</Text>
+              <Text style={styles.input}>{content?.email}</Text>
+              <Text style={styles.title}>{strings.ADDRESS}</Text>
+              <Text style={styles.input}>{content?.address}</Text>
+              <Text style={styles.title}>{strings.SUBJECT}</Text>
+              <Text style={styles.input}>{subject}</Text>
+              <Text style={styles.title}>{strings.MESSAGE}</Text>
+              <Text style={styles.input}>{message}</Text>
+            </View>
           </View>
-        </View>
-      ) : (
-        <Loading />
-      )}
-    </ScreenWrapper>
+        ) : (
+          <Loading />
+        )}
+      </ScreenWrapper>
+    </>
   );
 };
 

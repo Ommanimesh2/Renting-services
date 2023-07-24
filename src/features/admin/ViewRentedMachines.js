@@ -15,6 +15,9 @@ const ViewRentedMachines = ({navigation}) => {
   if (isSuccess) {
     console.log(isLoading);
     dataArray = machines; // Convert data to array
+    // if (dataArray.length == 0) {
+    //   dataArray = <Text>No Machines to display</Text>;
+    // }
     console.log(dataArray);
   } else if (error) {
     console.log('object');
@@ -23,14 +26,16 @@ const ViewRentedMachines = ({navigation}) => {
 
   return !isLoading ? (
     <>
-      <View style={styles.commonheader}>
-        <Text style={styles.headertext}>All orders</Text>
-      </View>
+      <Header text="All Orders" />
       <ScreenWrapper>
         <ScrollView>
-          {dataArray.map(e => {
-            return <OrderView props={e} navigation={navigation} key={e.id} />;
-          })}
+          {dataArray.length > 1 ? (
+            dataArray?.map(e => {
+              return <OrderView props={e} navigation={navigation} key={e.id} />;
+            })
+          ) : (
+            <Text>No orders Recieved Till now</Text>
+          )}
         </ScrollView>
         {/* {
         allrentmachinedata.map((e)=>{
@@ -53,7 +58,7 @@ export default ViewRentedMachines;
 
 const styles = StyleSheet.create({
   commonheader: {
-    backgroundColor: '#00AC00',
+    backgroundColor: '#0F623D',
     width: '100%',
     height: 48,
     width: 500,

@@ -44,6 +44,7 @@ export default function UploadScreen() {
         console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
+        8;
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
@@ -80,9 +81,6 @@ export default function UploadScreen() {
         <Text style={styles.buttonText}>{strings.PICK_AN_IMAGE}</Text>
       </TouchableOpacity>
       <View style={styles.imageContainer}>
-        {image !== null ? (
-          <Image source={{uri: image.uri}} style={styles.imageBox} />
-        ) : null}
         {uploading ? (
           <View style={styles.progressBarContainer}>
             <Progress.Bar progress={transferred} width={300} />
@@ -102,21 +100,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectButton: {
-    borderRadius: 10,
-    width: 310,
-    height: 56,
-    backgroundColor: '#00AC00',
+    width: 324,
+    height: 50,
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#0F623D',
+    marginHorizontal: 16,
+    marginTop: 30,
   },
   uploadButton: {
-    borderRadius: 5,
-    width: 200,
+    width: 324,
     height: 50,
-    backgroundColor: '#ffb6b9',
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    backgroundColor: '#0F623D',
+    marginHorizontal: 16,
+    marginTop: 65,
   },
   buttonText: {
     color: 'white',
@@ -124,8 +125,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   imageContainer: {
-    marginTop: 30,
-    marginBottom: 50,
     alignItems: 'center',
   },
   progressBarContainer: {

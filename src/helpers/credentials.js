@@ -103,5 +103,8 @@ const getCredentials = async () => {
     console.log(e);
   }
 };
-
-export {setCredentials, getCredentials};
+const userLoggedIn = async () => {
+  const user = await getCredentials();
+  return user;
+};
+export {setCredentials, getCredentials, userLoggedIn};

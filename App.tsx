@@ -93,6 +93,12 @@ const App = () => {
                 component={UniqueOrder}
                 options={{headerShown: false}}
               />
+              <Stack.Screen
+                name="uniqueQuery"
+                initialParams={{user_id: 21}}
+                component={UniqueQuery}
+                options={{headerShown: false}}
+              />
             </>
           )}
         </Stack.Navigator>

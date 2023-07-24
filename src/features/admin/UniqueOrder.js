@@ -17,6 +17,7 @@ import {
 import ScreenWrapper from '../../app/components/ScreenWrapper';
 import Loading from './Loading';
 import {Button} from '@react-native-material/core';
+import Header from '../../app/components/Header';
 const UniqueOrder = ({route, navigation}) => {
   const {orderId, placed_at, payement_status, payement_mode} = route.params;
   console.log(orderId);
@@ -37,34 +38,37 @@ const UniqueOrder = ({route, navigation}) => {
     content = <Loading />;
   }
   return (
-    <ScreenWrapper>
-      {!isLoading ? (
-        <View>
-          <View style={styles.container}>
-            <Text style={styles.head}>
-              {' '}
-              {strings.ORDER_ID} : {orderId}
-            </Text>
-            <Text style={styles.title}>{strings.ORDERED_BY}</Text>
-            <Text style={styles.input}>{content?.username}</Text>
-            <Text style={styles.title}>{strings.PHONE_NUMBER}</Text>
-            <Text style={styles.input}>{content?.phone_no}</Text>
-            <Text style={styles.title}>{strings.EMAIL}</Text>
-            <Text style={styles.input}>{content?.email}</Text>
-            <Text style={styles.title}>{strings.ADDRESS}</Text>
-            <Text style={styles.input}>{content?.address}</Text>
-            <Text style={styles.title}>{strings.PLACED_AT}</Text>
-            <Text style={styles.input}>{placed_at}</Text>
-            <Text style={styles.title}>{strings.PAYMENT_STATUS}</Text>
-            <Text style={styles.input}>{payement_status}</Text>
-            <Text style={styles.title}>{strings.PAYMENT_MODE}</Text>
-            <Text style={styles.input}>{payement_mode}</Text>
+    <>
+      <Header text={`${strings.ORDER_ID} : ${orderId}`} />
+      <ScreenWrapper>
+        {!isLoading ? (
+          <View>
+            <View style={styles.container}>
+              <Text style={styles.head}>
+                {' '}
+                {strings.ORDER_ID} : {orderId}
+              </Text>
+              <Text style={styles.title}>{strings.ORDERED_BY}</Text>
+              <Text style={styles.input}>{content?.username}</Text>
+              <Text style={styles.title}>{strings.PHONE_NUMBER}</Text>
+              <Text style={styles.input}>{content?.phone_no}</Text>
+              <Text style={styles.title}>{strings.EMAIL}</Text>
+              <Text style={styles.input}>{content?.email}</Text>
+              <Text style={styles.title}>{strings.ADDRESS}</Text>
+              <Text style={styles.input}>{content?.address}</Text>
+              <Text style={styles.title}>{strings.PLACED_AT}</Text>
+              <Text style={styles.input}>{placed_at}</Text>
+              <Text style={styles.title}>{strings.PAYMENT_STATUS}</Text>
+              <Text style={styles.input}>{payement_status}</Text>
+              <Text style={styles.title}>{strings.PAYMENT_MODE}</Text>
+              <Text style={styles.input}>{payement_mode}</Text>
+            </View>
           </View>
-        </View>
-      ) : (
-        <Loading />
-      )}
-    </ScreenWrapper>
+        ) : (
+          <Loading />
+        )}
+      </ScreenWrapper>
+    </>
   );
 };
 

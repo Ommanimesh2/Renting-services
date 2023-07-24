@@ -89,4 +89,7 @@ export default {
   SEARCH: 'Search',
   MAP: 'Map',
   ENTER_FILTER_VALUE: 'Enter Filter Value',
+  QUERY_NO: 'Query No',
+  USERNAME: 'User Name',
+  MESSAGE: 'message',
 };

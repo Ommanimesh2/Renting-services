@@ -2,7 +2,6 @@ import {StyleSheet, Image, Text, View, Pressable} from 'react-native';
 import React from 'react';
 import {useDeleteRentMachineMutation} from '../api/apiSlice';
 import strings from '../../helpers/LocalisedStrings';
-import {useSelector} from 'react-redux';
 const StallCard = ({props, navigation}) => {
   const {Name, Price, date, rentimage, id, KVK} = props;
   return (
@@ -10,41 +9,62 @@ const StallCard = ({props, navigation}) => {
       <Pressable
         onPress={() => navigation.navigate('uniqueMachine', {itemId: id})}>
         <View style={styles.container}>
-          <View style={{height: 110, width: 120}}>
+          <View style={{height: 110, width: '40%', alignItems: 'center'}}>
             <Image
-              style={{borderRadius: 8, height: '100%', width: '100%'}}
+              style={{height: '100%', width: '90%'}}
               source={{uri: `${rentimage}`}}
             />
           </View>
-          <View>
-            <View
+          <View
+            style={{
+              width: '60%',
+              textAlign: 'left',
+              paddingLeft: '10%',
+              height: 130,
+            }}>
+            <Text style={{fontSize: 15, color: '#2E2E2E', fontWeight: 700}}>
+              {Name.charAt(0).toUpperCase()}
+              {Name.slice(1)}
+            </Text>
+            <Text
               style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: '100%',
-                paddingHorizontal: 20,
+                color: '#979999',
+                fontFamily: 'Quicksand',
+                fontSize: 11,
+                fontWeight: 500,
               }}>
-              <Text style={{fontSize: 16, fontWeight: 800}}>{Name}</Text>
-            </View>
-            <Text style={{paddingHorizontal: 17}}>{KVK.Name_KVK}</Text>
-            <View
+              {KVK.Name_KVK}
+            </Text>
+            <Text
               style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 3,
-                paddingHorizontal: 15,
-                paddingTop: 0,
+                color: '#979999',
+                fontFamily: 'Quicksand',
+                fontSize: 12.5,
+                fontWeight: 600,
+                marginTop: 2,
               }}>
-              <Image
-                style={{marginTop: 5, tintColor: 'black'}}
-                source={require('../assets/location.png')}
-              />
+              {KVK.Address}
+            </Text>
 
-              <Text style={{fontSize: 15}}>{KVK.Address}</Text>
-            </View>
-            <Text style={{paddingHorizontal: 17}}>{date}</Text>
-            <Text style={{paddingHorizontal: 17}}>Price:{Price}/day</Text>
+            <Text
+              style={{
+                color: '#979999',
+                fontFamily: 'Quicksand',
+                fontSize: 12.5,
+                fontWeight: 700,
+                marginTop: 2,
+              }}>
+              {date}
+            </Text>
+            <Text
+              style={{
+                color: '#2E2E2E',
+                fontFamily: 'Quicksand',
+                fontSize: 13.5,
+                fontWeight: 700,
+              }}>
+              Price: {Price}/day
+            </Text>
           </View>
           <View></View>
         </View>
@@ -61,12 +81,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    height: 150,
-    paddingTop: 16,
+    height: 140,
+    paddingTop: 15,
     marginTop: 16,
-    borderWidth: 1,
     backgroundColor: '#F9FCFE',
     borderColor: '#F9FCFE',
-    borderRadius: 8,
   },
 });

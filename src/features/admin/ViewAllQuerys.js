@@ -1,21 +1,20 @@
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
 import {useState} from 'react';
-import {useGetQueriesQuery} from '../../app/api/apiSlice';
+import {useGetAllQueryQuery} from '../../app/api/apiSlice';
 import ScreenWrapper from '../../app/components/ScreenWrapper';
 import Loading from './Loading';
 import Header from '../../app/components/Header';
 import OrderView from '../../app/components/OrderView';
 import Query from '../../app/components/Query';
 const ViewAllQuerys = ({navigation}) => {
-  const [allrentmachinedata, setAllRentMachineData] = useState([]);
-
-  const {data: machines, isSuccess, error, isLoading} = useGetQueriesQuery();
+  const {data, isSuccess, error, isLoading} = useGetAllQueryQuery();
+  console.log(data);
   let dataArray;
 
   if (isSuccess) {
     console.log(isLoading);
-    dataArray = machines; // Convert data to array
+    dataArray = data; // Convert data to array
     console.log(dataArray);
   } else if (error) {
     console.log('object');
@@ -24,9 +23,7 @@ const ViewAllQuerys = ({navigation}) => {
 
   return !isLoading ? (
     <>
-      <View style={styles.commonheader}>
-        <Text style={styles.headertext}>All Querys</Text>
-      </View>
+      <Header text="All Queries" />
       <ScreenWrapper>
         <ScrollView>
           {dataArray.map(e => {
@@ -54,7 +51,7 @@ export default ViewAllQuerys;
 
 const styles = StyleSheet.create({
   commonheader: {
-    backgroundColor: '#00AC00',
+    backgroundColor: '#0F623D',
     width: '100%',
     height: 48,
     width: 500,

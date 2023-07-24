@@ -19,6 +19,15 @@ const MainLogin = ({navigation}) => {
         <Text style={styles.header}>
           Welcome farmers, renting farming machines is just a tap away!
         </Text>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginVertical: 60,
+            fontSize: 30,
+            color: 'green',
+          }}>
+          ADMIN
+        </Text>
         <View>
           <Pressable
             style={styles.mainBtn}
@@ -51,7 +60,6 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     fontWeight: 600,
     fontSize: 14,
-    marginBottom: 100,
   },
   mainBtn: {
     width: 328,

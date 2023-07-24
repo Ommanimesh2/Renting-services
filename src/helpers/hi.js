@@ -90,4 +90,7 @@ export default {
   SEARCH: 'खोज करें',
   MAP: 'नक्शा',
   ENTER_FILTER_VALUE: 'फ़िल्टर मान दर्ज करें',
+  QUERY_NO: 'प्रश्न सं',
+  USERNAME: 'उपयोगकर्ता नाम',
+  MESSAGE: 'संदेश',
 };
