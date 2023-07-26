@@ -48,6 +48,9 @@ const ViewAllQuerys = ({navigation}) => {
     console.log(isLoading);
     dataArray = data; // Convert data to array
     console.log(dataArray);
+    dataArray.map(e => {
+      console.log(e.resolved);
+    });
   } else if (error) {
     console.log('object');
     console.log(error);
@@ -58,9 +61,11 @@ const ViewAllQuerys = ({navigation}) => {
       <Header text="All Queries" />
       <ScreenWrapper>
         <ScrollView>
-          {dataArray?.map(e => {
-            return <Query props={e} navigation={navigation} key={e.id} />;
-          })}
+          {dataArray
+            ?.filter(e => !e.resolved) // Filter out resolved queries (assuming 'resolved' is a property in each query object)
+            .map(e => (
+              <Query props={e} navigation={navigation} key={e.id} />
+            ))}
         </ScrollView>
         {/* {
         allrentmachinedata.map((e)=>{

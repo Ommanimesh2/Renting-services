@@ -92,4 +92,5 @@ export default {
   QUERY_NO: 'Query No',
   USERNAME: 'User Name',
   MESSAGE: 'message',
+  MARK_RESOLVED: 'Resolved',
 };

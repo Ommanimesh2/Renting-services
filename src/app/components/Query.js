@@ -2,7 +2,7 @@ import {StyleSheet, Text, View, Button} from 'react-native';
 import React from 'react';
 import strings from '../../helpers/LocalisedStrings';
 const Query = ({props, navigation}) => {
-  const {name, id, email, subject, message, user_id} = props;
+  const {name, id, email, subject, message, user_id, resolved} = props;
 
   return (
     <View
@@ -37,6 +37,7 @@ const Query = ({props, navigation}) => {
             email: email,
             subject: subject,
             message: message,
+            resolved: resolved,
           });
         }}
         title="Details"

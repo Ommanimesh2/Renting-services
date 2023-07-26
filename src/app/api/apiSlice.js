@@ -45,7 +45,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://organic-app-390713.de.r.appspot.com',
   }),
-  tagTypes: ['Machines', 'User'],
+  tagTypes: ['Machines', 'User', 'Query'],
   endpoints: builder => ({
     signUp: builder.mutation({
       query: initialPost => ({
@@ -88,6 +88,15 @@ export const apiSlice = createApi({
       invalidatesTags: ['Machines'],
     }),
 
+    markQueryResolved: builder.mutation({
+      query: initialPatch => ({
+        url: `/api/query/${initialPatch.id}`,
+        method: 'PATCH',
+        body: initialPatch,
+      }),
+      invalidatesTags: ['Query'],
+    }),
+
     getAllRentMachines: builder.query({
       query: machineId => `/api/machine_kvk/${machineId}`,
       // transformResponse: res => res.sort((a, b) => b.id - a.id),
@@ -99,6 +108,7 @@ export const apiSlice = createApi({
     }),
     getAllQuery: builder.query({
       query: kvkId => `/api/query_kvk/${kvkId}`,
+      providesTags: ['Query'],
     }),
     getRentMachine: builder.query({
       query: machineId => `/api/rentdata/${machineId}`,
@@ -151,4 +161,5 @@ export const {
   useGetAdminKvkQuery,
   useGetFourImagesByOrderIdQuery,
   useGetAllQueryQuery,
+  useMarkQueryResolvedMutation,
 } = apiSlice;

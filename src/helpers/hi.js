@@ -93,4 +93,5 @@ export default {
   QUERY_NO: 'प्रश्न सं',
   USERNAME: 'उपयोगकर्ता नाम',
   MESSAGE: 'संदेश',
+  MARK_RESOLVED: 'हल किया',
 };
