@@ -133,7 +133,7 @@ const Login = ({navigation}: any) => {
           editable={!loading}
           style={styles.input}
           underlineColorAndroid="transparent"
-          placeholder="email"
+          placeholder={strings.EMAIL}
           placeholderTextColor="rgba(0, 0, 0, 0.7)"
           autoCapitalize="none"
           onChangeText={text => {
@@ -151,7 +151,7 @@ const Login = ({navigation}: any) => {
           editable={!loading}
           style={styles.input}
           underlineColorAndroid="transparent"
-          placeholder="password"
+          placeholder={strings.PASSWORD}
           placeholderTextColor="rgba(0, 0, 0, 0.7)"
           autoCapitalize="none"
           secureTextEntry={true}

@@ -54,7 +54,7 @@ const AdminRoutes = () => {
           tabBarIcon: ({color}) => (
             <Image
               // style={styles.bottomTabIcon}
-              source={require('../assets/Home.png')}
+              source={require('../assets/category.png')}
             />
           ),
           tabBarLabel: 'Orders',

@@ -142,6 +142,7 @@ const AddRentMachines = ({navigation}) => {
         <ScreenWrapper>
           <View style={styles.Addjobwrapper}>
             <View style={styles.bodynewjob}>
+            <Text >Your KVK Name:</Text>
               {content}
 
               <Text style={styles.newjobinputtext}>{strings.NAME}</Text>
@@ -150,7 +151,7 @@ const AddRentMachines = ({navigation}) => {
                 value={name}
                 style={styles.newjobinput}
                 underlineColorAndroid="transparent"
-                placeholder="Name of owner"
+                placeholder={strings.NAME}
                 placeholderTextColor="rgba(0, 0, 0, 0.7)"
                 placeholderFontSize="20"
                 autoCapitalize="none"
@@ -162,22 +163,12 @@ const AddRentMachines = ({navigation}) => {
                 value={price}
                 style={styles.newjobinput}
                 underlineColorAndroid="transparent"
-                placeholder="Price"
+                placeholder={strings.PRICE}
                 keyboardType="numeric"
                 placeholderTextColor="rgba(0, 0, 0, 0.7)"
                 placeholderFontSize="20"
                 autoCapitalize="none"
               />
-              {/* <Text style={styles.newjobinputtext}>{strings.LOCATION}</Text>
-            <TextInput
-            editable={false}
-              style={styles.newjobinput}
-              underlineColorAndroid="transparent"
-              placeholder="Location"
-              placeholderTextColor="rgba(0, 0, 0, 0.7)"
-              placeholderFontSize="20"
-              autoCapitalize="none"
-            /> */}
               <View style={styles.flexcolumn}>
                 <Text style={styles.newjobinputtext}>
                   {strings.MACHINE_DETAILS}
@@ -187,7 +178,7 @@ const AddRentMachines = ({navigation}) => {
                   value={machineDetails}
                   style={styles.newjobinput}
                   underlineColorAndroid="transparent"
-                  placeholder="Add Details"
+                  placeholder={strings.MACHINE_DETAILS}
                   placeholderTextColor="rgba(0, 0, 0, 0.7)"
                   placeholderFontSize="20"
                   autoCapitalize="none"
@@ -209,7 +200,7 @@ const AddRentMachines = ({navigation}) => {
                   autoCapitalize="none"
                 />
               </View>
-              <Text>{strings.BOOKED_STATUS}</Text>
+              <Text style={{marginTop:20,}}>{strings.BOOKED_STATUS}</Text>
               <Picker
                 selectedValue={bookedstatus}
                 style={{height: 50, width: 150}}
@@ -222,7 +213,7 @@ const AddRentMachines = ({navigation}) => {
             <TouchableOpacity
               style={styles.addjobbutton}
               onPress={() => setOpen(true)}>
-              <Text style={styles.buttonText}>Choose a date here</Text>
+              <Text style={styles.buttonText}>{strings.CHOOSE_DATE}</Text>
             </TouchableOpacity>
             <DatePicker
               modal
@@ -238,11 +229,13 @@ const AddRentMachines = ({navigation}) => {
                 setOpen(false);
               }}
             />
-            <Text style={styles.newjobinputtext}>Pick image</Text>
+            <Text style={styles.newjobinputtext}>{strings.PICK_AN_IMAGE}</Text>
             <UploadScreen />
-            <Pressable
+            <TouchableOpacity
               style={styles.addjobbutton}
               onPress={() => {
+                name.length>2 && machineDetails.length>2   ?
+
                 handleClick(
                   name,
                   contact,
@@ -251,10 +244,12 @@ const AddRentMachines = ({navigation}) => {
                   bookedstatus,
                   rentimage,
                   date,
-                );
+                )
+                :
+                Alert.alert("Error Uploading Machine")
               }}>
               <Text style={styles.addjobtext}>{strings.ADD_MACHINES}</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </ScreenWrapper>
       </ScrollView>
@@ -327,13 +322,13 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   addjobbutton: {
-    width: 324,
+    width: "90%",
     height: 50,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#0F623D',
-    marginHorizontal: 16,
+    marginLeft: "5%",
     marginTop: 65,
   },
   addjobtext: {

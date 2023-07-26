@@ -9,7 +9,7 @@ import {setCredentials, logOut} from '../../features/Auth/authSlice';
 import {RootState} from '../store';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost/8000',
+  baseUrl: 'https://organic-app-390713.de.r.appspot.com',
   credentials: 'include',
   prepareHeaders: (headers, {getState}) => {
     const token = getState().auth.token;

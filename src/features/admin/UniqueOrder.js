@@ -6,6 +6,7 @@ import {
   Image,
   ActivityIndicator,
   Alert,
+  ScrollView,
 } from 'react-native';
 import strings from '../../helpers/LocalisedStrings';
 import React from 'react';

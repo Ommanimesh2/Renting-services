@@ -1,10 +1,11 @@
-import {StyleSheet, Text, View, Button} from 'react-native';
+import {StyleSheet, Text, View, Button, ScrollView} from 'react-native';
 import React from 'react';
 import strings from '../../helpers/LocalisedStrings';
 const Query = ({props, navigation}) => {
   const {name, id, email, subject, message, user_id, resolved} = props;
 
   return (
+    <ScrollView showsVerticalScrollIndicator={false}>
     <View
       style={{
         backgroundColor: 'white',
@@ -45,6 +46,7 @@ const Query = ({props, navigation}) => {
         accessibilityLabel="Learn more about this purple button"
       />
     </View>
+    </ScrollView>
   );
 };
 

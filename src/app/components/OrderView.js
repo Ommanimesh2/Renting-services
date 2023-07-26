@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Button} from 'react-native';
+import {StyleSheet, Text, View, Button, ScrollView} from 'react-native';
 import React from 'react';
 import strings from '../../helpers/LocalisedStrings';
 const OrderView = ({props, navigation}) => {
@@ -6,12 +6,13 @@ const OrderView = ({props, navigation}) => {
     props;
 
   return (
+    <ScrollView showsVerticalScrollIndicator={false}>
     <View
       style={{
         backgroundColor: 'white',
         marginVertical: 10,
         paddingVertical: 10,
-        paddingHorizontal: 5,
+        paddingHorizontal: 8,
       }}>
       <View
         style={{
@@ -43,6 +44,7 @@ const OrderView = ({props, navigation}) => {
         accessibilityLabel="Learn more about this purple button"
       />
     </View>
+    </ScrollView>
   );
 };
 

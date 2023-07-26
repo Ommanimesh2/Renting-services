@@ -4,7 +4,7 @@ var jwt_decode = require('jwt-decode');
 
 async function getAccessUsingRefresh(refreshToken) {
   console.log(refreshToken);
-  return fetch('https://ommanimesh.pythonanywhere.com/jwt/refresh/', {
+  return fetch('https://organic-app-390713.de.r.appspot.com/jwt/refresh/', {
     method: 'POST',
 
     headers: {
@@ -15,7 +15,7 @@ async function getAccessUsingRefresh(refreshToken) {
 }
 
 async function checkIfValidAcess(accessToken) {
-  return fetch('https://ommanimesh.pythonanywhere.com/jwt/verify/', {
+  return fetch('https://organic-app-390713.de.r.appspot.com/jwt/verify/', {
     method: 'POST',
 
     headers: {
