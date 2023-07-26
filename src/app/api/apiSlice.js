@@ -95,10 +95,10 @@ export const apiSlice = createApi({
     }),
 
     getAllOrders: builder.query({
-      query: () => '/api/rentinfo/',
+      query: kvkId => `/api/order_kvk/${kvkId}`,
     }),
     getAllQuery: builder.query({
-      query: () => '/api/query/',
+      query: kvkId => `/api/query_kvk/${kvkId}`,
     }),
     getRentMachine: builder.query({
       query: machineId => `/api/rentdata/${machineId}`,

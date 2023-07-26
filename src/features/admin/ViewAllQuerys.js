@@ -1,14 +1,46 @@
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
 import {useState} from 'react';
-import {useGetAllQueryQuery} from '../../app/api/apiSlice';
+import {useGetAllQueryQuery, useGetAdminKvkQuery} from '../../app/api/apiSlice';
 import ScreenWrapper from '../../app/components/ScreenWrapper';
 import Loading from './Loading';
 import Header from '../../app/components/Header';
 import OrderView from '../../app/components/OrderView';
 import Query from '../../app/components/Query';
+import {getCredentials} from '../../helpers/credentials';
 const ViewAllQuerys = ({navigation}) => {
-  const {data, isSuccess, error, isLoading} = useGetAllQueryQuery();
+  const [loggedInUser, setLoggedInUser] = useState([]);
+
+  let content,
+    db,
+    admin,
+    loading,
+    kvk = [];
+  useEffect(() => {
+    const giveUser = async () => {
+      try {
+        const use = await getCredentials();
+        setLoggedInUser(use);
+        console.log(use);
+      } catch (error) {}
+    };
+    giveUser();
+  }, []);
+  const {
+    data: KVK,
+    isSuccess: adminKvk,
+    error,
+  } = useGetAdminKvkQuery(loggedInUser?.id, {
+    enabled: !!loggedInUser,
+  });
+  if (adminKvk) {
+    console.log(KVK[0]?.id);
+    kvk = KVK;
+  }
+
+  const {data, isSuccess, isLoading} = useGetAllQueryQuery(kvk[0]?.id, {
+    enabled: !!kvk,
+  });
   console.log(data);
   let dataArray;
 

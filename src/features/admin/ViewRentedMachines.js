@@ -1,15 +1,52 @@
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
 import {useState} from 'react';
-import {useGetAllOrdersQuery} from '../../app/api/apiSlice';
+import {
+  useGetAllOrdersQuery,
+  useGetAdminKvkQuery,
+} from '../../app/api/apiSlice';
 import ScreenWrapper from '../../app/components/ScreenWrapper';
 import Loading from './Loading';
 import Header from '../../app/components/Header';
+import {getCredentials} from '../../helpers/credentials';
 import OrderView from '../../app/components/OrderView';
 const ViewRentedMachines = ({navigation}) => {
-  const [allrentmachinedata, setAllRentMachineData] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState([]);
 
-  const {data: machines, isSuccess, error, isLoading} = useGetAllOrdersQuery();
+  let content,
+    db,
+    admin,
+    loading,
+    kvk = [];
+  useEffect(() => {
+    const giveUser = async () => {
+      try {
+        const use = await getCredentials();
+        setLoggedInUser(use);
+        console.log(use);
+      } catch (error) {}
+    };
+    giveUser();
+  }, []);
+  const {data: KVK, isSuccess: adminKvk} = useGetAdminKvkQuery(
+    loggedInUser?.id,
+    {
+      enabled: !!loggedInUser,
+    },
+  );
+  if (adminKvk) {
+    console.log(KVK[0]?.id);
+    kvk = KVK;
+  }
+
+  const {
+    data: machines,
+    isSuccess,
+    error,
+    isLoading,
+  } = useGetAllOrdersQuery(kvk[0]?.id, {
+    enabled: !!kvk,
+  });
   let dataArray;
 
   if (isSuccess) {
@@ -29,7 +66,7 @@ const ViewRentedMachines = ({navigation}) => {
       <Header text="All Orders" />
       <ScreenWrapper>
         <ScrollView>
-          {dataArray?.length > 1 ? (
+          {dataArray?.length > 0 ? (
             dataArray?.map(e => {
               return <OrderView props={e} navigation={navigation} key={e.id} />;
             })
