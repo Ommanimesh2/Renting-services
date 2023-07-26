@@ -26,7 +26,7 @@ const ViewAllQuerys = ({navigation}) => {
       <Header text="All Queries" />
       <ScreenWrapper>
         <ScrollView>
-          {dataArray.map(e => {
+          {dataArray?.map(e => {
             return <Query props={e} navigation={navigation} key={e.id} />;
           })}
         </ScrollView>

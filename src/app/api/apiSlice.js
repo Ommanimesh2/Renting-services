@@ -42,7 +42,9 @@ const baseQuery = fetchBaseQuery({
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:8000/'}),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://organic-app-390713.de.r.appspot.com',
+  }),
   tagTypes: ['Machines', 'User'],
   endpoints: builder => ({
     signUp: builder.mutation({
@@ -87,7 +89,7 @@ export const apiSlice = createApi({
     }),
 
     getAllRentMachines: builder.query({
-      query: () => '/api/rentmachine/',
+      query: machineId => `/api/machine_kvk/${machineId}`,
       // transformResponse: res => res.sort((a, b) => b.id - a.id),
       providesTags: ['Machines'],
     }),
@@ -100,6 +102,10 @@ export const apiSlice = createApi({
     }),
     getRentMachine: builder.query({
       query: machineId => `/api/rentdata/${machineId}`,
+      invalidatesTags: ['Machines'],
+    }),
+    getFourImagesByOrderId: builder.query({
+      query: orderId => `/api/orderid/${orderId}`,
       invalidatesTags: ['Machines'],
     }),
     getOrderUser: builder.query({
@@ -143,5 +149,6 @@ export const {
   useNewAccessTokenMutation,
   useGetOrderUserQuery,
   useGetAdminKvkQuery,
+  useGetFourImagesByOrderIdQuery,
   useGetAllQueryQuery,
 } = apiSlice;

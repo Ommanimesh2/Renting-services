@@ -9,7 +9,11 @@ import {
 import React from 'react';
 import {useState, useEffect} from 'react';
 import ScreenWrapper from '../../app/components/ScreenWrapper';
-import {useGetAllRentMachinesQuery} from '../../app/api/apiSlice';
+import {
+  useGetAllRentMachinesQuery,
+  useGetAdminKvkQuery,
+} from '../../app/api/apiSlice';
+import {getCredentials} from '../../helpers/credentials';
 import MachineCard from '../../app/components/MachineCard';
 import StallCard from '../../app/components/StallCard';
 import Loading from './Loading';
@@ -17,20 +21,47 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
 import Header from '../../app/components/Header';
 const RentMachines = ({navigation}) => {
-  const [allrentmachinedata, setAllRentMachineData] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState([]);
 
+  let content,
+    db,
+    admin,
+    loading,
+    kvk = [];
+  useEffect(() => {
+    const giveUser = async () => {
+      try {
+        const use = await getCredentials();
+        setLoggedInUser(use);
+        console.log(use);
+      } catch (error) {}
+    };
+    giveUser();
+  }, []);
+  const {
+    data: KVK,
+    isSuccess: adminKvk,
+    error,
+  } = useGetAdminKvkQuery(loggedInUser?.id, {
+    enabled: !!loggedInUser,
+  });
+  if (adminKvk) {
+    console.log(KVK[0]?.id);
+    kvk = KVK;
+  }
   const {
     data: machines,
     isSuccess,
-    error,
-    isFetching,
     isLoading,
-  } = useGetAllRentMachinesQuery();
-  let content, db;
+  } = useGetAllRentMachinesQuery(kvk[0]?.id, {
+    enabled: !!kvk,
+  });
+
   if (isSuccess) {
-    db = Array.from(machines.results);
-    if (db.length > 0) {
-      content = db.map(item => {
+    console.log(machines);
+
+    if (machines?.length > 0) {
+      content = machines?.map(item => {
         return <StallCard key={item.id} props={item} navigation={navigation} />;
       });
     } else {
@@ -39,13 +70,14 @@ const RentMachines = ({navigation}) => {
   } else if (error) {
     console.log(error);
   } else if (isLoading) {
+    loading = isLoading;
   }
 
   return (
     <>
       <Header text="All Machines" />
       <ScreenWrapper>
-        {!isLoading ? <ScrollView>{content}</ScrollView> : <Loading />}
+        {!loading ? <ScrollView>{content}</ScrollView> : <Loading />}
       </ScreenWrapper>
     </>
   );

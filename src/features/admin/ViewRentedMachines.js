@@ -29,7 +29,7 @@ const ViewRentedMachines = ({navigation}) => {
       <Header text="All Orders" />
       <ScreenWrapper>
         <ScrollView>
-          {dataArray.length > 1 ? (
+          {dataArray?.length > 1 ? (
             dataArray?.map(e => {
               return <OrderView props={e} navigation={navigation} key={e.id} />;
             })
