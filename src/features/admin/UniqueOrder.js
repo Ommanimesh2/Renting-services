@@ -2,11 +2,11 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   Image,
   ActivityIndicator,
   Alert,
   ScrollView,
+  Pressable
 } from 'react-native';
 import strings from '../../helpers/LocalisedStrings';
 import React from 'react';
@@ -16,6 +16,7 @@ import {
   useDeleteRentMachineMutation,
   useGetOrderUserQuery,
   useGetFourImagesByOrderIdQuery,
+  useOrderReceivedMutation,
 } from '../../app/api/apiSlice';
 import ScreenWrapper from '../../app/components/ScreenWrapper';
 import Loading from './Loading';
@@ -32,7 +33,8 @@ const UniqueOrder = ({route, navigation}) => {
   } = useGetOrderUserQuery(orderId);
 
   const {data: imageData} = useGetFourImagesByOrderIdQuery(orderId);
-
+  const [markResolved, {isError, error: queryError}] =
+  useOrderReceivedMutation(orderId);
   let content, db;
   if (isSuccess) {
     content = user;
@@ -48,7 +50,7 @@ const UniqueOrder = ({route, navigation}) => {
     <>
       <Header text={`${strings.ORDER_ID} : ${orderId}`} />
       <ScreenWrapper>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {!isLoading ? (
             <View>
               <View style={styles.container}>
@@ -71,7 +73,17 @@ const UniqueOrder = ({route, navigation}) => {
                 <Text style={styles.title}>{strings.PAYMENT_MODE}</Text>
                 <Text style={styles.input}>{payement_mode}</Text>
               </View>
-
+              <Pressable
+                onPress={() => {
+                  markResolved({
+                    id: orderId,
+                    isRecieved: true,
+                  });
+                  navigation.navigate('adminRoutes');
+                }}
+                style={styles.addjobbutton}>
+                <Text style={styles.addjobtext}>{strings.MARK_RESOLVED}</Text>
+              </Pressable>
               <View>
                 {imageData?.length != 0 ? (
                   <View>
@@ -154,5 +166,21 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     textAlignVertical: 'center',
     paddingHorizontal: 10,
+  },
+
+  addjobbutton: {
+    width: 324,
+    height: 50,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0F623D',
+    marginHorizontal: 16,
+    marginTop: 65,
+  },
+  addjobtext: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 600,
   },
 });
