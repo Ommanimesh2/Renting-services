@@ -110,7 +110,7 @@ const Login = ({navigation}: any) => {
         setCredentials(userData.data.user);
         setPwd('');
         setUser('');
-        navigation.navigate('adminRoutes');
+        navigation.navigate('adminDroneRoutes');
       } else if (userData.data.message) {
         setPwd('');
         setUser('');

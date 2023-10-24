@@ -14,6 +14,8 @@ import UniqueOrder from './src/features/admin/UniqueOrder';
 import MainLogin from './src/features/MainLogin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UniqueQuery from './src/features/admin/UniqueQuery';
+// import DroneRoutesAdmin from './src/app/routes/DroneRoutesAdmin';
+import DroneRoutesAdmin from './src/app/routes/DroneRoutesAdmin';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(false);
@@ -38,6 +40,11 @@ const App = () => {
               <Stack.Screen
                 name="adminRoutes"
                 component={AdminRoutes}
+                options={{headerShown: false}}
+              />
+               <Stack.Screen
+                name="adminDroneRoutes"
+                component={DroneRoutesAdmin}
                 options={{headerShown: false}}
               />
               <Stack.Screen
@@ -74,6 +81,11 @@ const App = () => {
               <Stack.Screen
                 name="login"
                 component={Login}
+                options={{headerShown: false}}
+              />
+                <Stack.Screen
+                name="adminDroneRoutes"
+                component={DroneRoutesAdmin}
                 options={{headerShown: false}}
               />
               <Stack.Screen

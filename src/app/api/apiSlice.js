@@ -9,7 +9,7 @@ import {setCredentials, logOut} from '../../features/Auth/authSlice';
 import {RootState} from '../store';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://organic-app-390713.de.r.appspot.com',
+  baseUrl: 'https://ommanimesh.pythonanywhere.com',
   credentials: 'include',
   prepareHeaders: (headers, {getState}) => {
     const token = getState().auth.token;
@@ -43,7 +43,7 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://organic-app-390713.de.r.appspot.com',
+    baseUrl: 'https://ommanimesh.pythonanywhere.com',
   }),
   tagTypes: ['Machines', 'User', 'Query','Orders'],
   endpoints: builder => ({
@@ -72,7 +72,7 @@ export const apiSlice = createApi({
     }),
     postRentMachines: builder.mutation({
       query: initialPost => ({
-        url: '/api/rentmachine/',
+        url: '/api/machine/rentmachine/',
         method: 'POST',
         body: initialPost,
       }),
@@ -81,7 +81,7 @@ export const apiSlice = createApi({
 
     postBookedStatus: builder.mutation({
       query: initialPatch => ({
-        url: `/api/rentdata/${machineId}/`,
+        url: `/api/machine/rentdata/${machineId}/`,
         method: 'PATCH',
         body: initialPatch,
       }),
@@ -90,7 +90,7 @@ export const apiSlice = createApi({
 
     markQueryResolved: builder.mutation({
       query: initialPatch => ({
-        url: `/api/query/${initialPatch.id}`,
+        url: `/api/machine/query/${initialPatch.id}`,
         method: 'PATCH',
         body: initialPatch,
       }),
@@ -98,37 +98,37 @@ export const apiSlice = createApi({
     }),
 
     getAllRentMachines: builder.query({
-      query: machineId => `/api/machine_kvk/${machineId}`,
+      query: machineId => `/api/machine/machine_kvk/${machineId}`,
       // transformResponse: res => res.sort((a, b) => b.id - a.id),
       providesTags: ['Machines'],
     }),
 
     getAllOrders: builder.query({
-      query: kvkId => `/api/order_kvk/${kvkId}`,
+      query: kvkId => `/api/machine/order_kvk/${kvkId}`,
       providesTags: ['Orders'],
     }),
     getAllQuery: builder.query({
-      query: kvkId => `/api/query_kvk/${kvkId}`,
+      query: kvkId => `/api/machine/query_kvk/${kvkId}`,
       providesTags: ['Query'],
     }),
     getRentMachine: builder.query({
-      query: machineId => `/api/rentdata/${machineId}`,
+      query: machineId => `/api/machine/rentdata/${machineId}`,
       invalidatesTags: ['Machines'],
     }),
     getFourImagesByOrderId: builder.query({
-      query: orderId => `/api/orderid/${orderId}`,
+      query: orderId => `/api/machine/orderid/${orderId}`,
       invalidatesTags: ['Machines'],
     }),
     getOrderUser: builder.query({
       query: machineId => `/user/${machineId}/`,
     }),
     getAdminKvk: builder.query({
-      query: adminid => `/api/kvk_admin/${adminid}`,
+      query: adminid => `/api/machine/kvk_admin/${adminid}`,
     }),
 
     updateRentMachine: builder.mutation({
       query: machine => ({
-        url: `/api/rentdata/${machine.id}/`,
+        url: `/api/machine/rentdata/${machine.id}/`,
         method: 'PATCH',
         // Include the entire post object as the body of the request
         body: machine,
@@ -137,7 +137,7 @@ export const apiSlice = createApi({
     }),
     OrderReceived: builder.mutation({
       query: initialPatch => ({
-        url: `/api/query/${initialPatch.id}`,
+        url: `/api/machine/query/${initialPatch.id}`,
         method: 'PATCH',
         body: initialPatch,
       }),
@@ -145,7 +145,7 @@ export const apiSlice = createApi({
     }),
     deleteRentMachine: builder.mutation({
       query: ({id}) => ({
-        url: `/api/rentdata/${id}`,
+        url: `/api/machine/rentdata/${id}`,
         method: 'DELETE',
         // Include the entire post object as the body of the request
         body: id,
