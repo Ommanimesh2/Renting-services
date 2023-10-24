@@ -40,7 +40,7 @@ const DroneRoutesAdmin = () => {
 
           tabBarActiveTintColor: '#0F623D',
           tabBarInactiveTintColor: 'gray',
-          tabBarLabel: 'Rent',
+          tabBarLabel: 'All Drones',
           headerShown: false,
         }}
       />
@@ -55,7 +55,7 @@ const DroneRoutesAdmin = () => {
 
             />
           ),
-          tabBarLabel: 'Add',
+          tabBarLabel: 'Maintainers',
           tabBarActiveTintColor: '#0F623D',
           tabBarInactiveTintColor: 'gray',
           headerShown: false,
