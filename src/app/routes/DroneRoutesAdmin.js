@@ -6,6 +6,7 @@ import AddRentDrone from '../../features/DroneAdmin/components/AddRentDrone';
 import Vieworders from '../../features/DroneAdmin/Vieworders';
 import ViewQueries from '../../features/DroneAdmin/ViewQueries';
 import HomeDrone from '../../features/DroneAdmin/HomeDrone';
+import Maintainers from '../../features/DroneAdmin/Maintainers';
 
 const DroneRoutesAdmin = () => {
     const Tab = createBottomTabNavigator();
@@ -44,8 +45,8 @@ const DroneRoutesAdmin = () => {
         }}
       />
       <Tab.Screen
-        name="RentDrones"
-        component={RentDrones}
+        name="Maintainer"
+        component={Maintainers}
         options={{
           tabBarIcon: ({color}) => (
             <Image

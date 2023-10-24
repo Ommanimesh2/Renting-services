@@ -17,6 +17,7 @@ import UniqueQuery from './src/features/admin/UniqueQuery';
 // import DroneRoutesAdmin from './src/app/routes/DroneRoutesAdmin';
 import DroneRoutesAdmin from './src/app/routes/DroneRoutesAdmin';
 import AddRentDrone from './src/features/DroneAdmin/components/AddRentDrone';
+import AddMaintainer from './src/features/DroneAdmin/components/AddMaintainer';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(false);
@@ -58,7 +59,12 @@ const App = () => {
                 name="AddDrones"
                 component={AddRentDrone}
                 options={{headerShown: false}}
-              />
+              /> 
+               <Stack.Screen
+              name="AddMaintainer"
+              component={AddMaintainer}
+              options={{headerShown: false}}
+            />
               <Stack.Screen
                 name="uniqueOrder"
                 initialParams={{orderId: 21}}
@@ -89,6 +95,11 @@ const App = () => {
                 component={AddRentDrone}
                 options={{headerShown: false}}
               />
+              <Stack.Screen
+              name="AddMaintainer"
+              component={AddMaintainer}
+              options={{headerShown: false}}
+            />
               <Stack.Screen
                 name="login"
                 component={Login}
