@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import UniqueQuery from './src/features/admin/UniqueQuery';
 // import DroneRoutesAdmin from './src/app/routes/DroneRoutesAdmin';
 import DroneRoutesAdmin from './src/app/routes/DroneRoutesAdmin';
+import AddRentDrone from './src/features/DroneAdmin/components/AddRentDrone';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(false);
@@ -37,20 +38,25 @@ const App = () => {
         <Stack.Navigator>
           {isAuth ? (
             <>
+                <Stack.Screen
+                 name="adminDroneRoutes"
+                 component={DroneRoutesAdmin}
+                 options={{headerShown: false}}
+               />
               <Stack.Screen
                 name="adminRoutes"
                 component={AdminRoutes}
-                options={{headerShown: false}}
-              />
-               <Stack.Screen
-                name="adminDroneRoutes"
-                component={DroneRoutesAdmin}
                 options={{headerShown: false}}
               />
               <Stack.Screen
                 name="uniqueMachine"
                 initialParams={{itemId: 21}}
                 component={UniqueProductScreen}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="AddDrones"
+                component={AddRentDrone}
                 options={{headerShown: false}}
               />
               <Stack.Screen
@@ -76,6 +82,11 @@ const App = () => {
               <Stack.Screen
                 name="signup"
                 component={Signup}
+                options={{headerShown: false}}
+              />
+               <Stack.Screen
+                name="AddDrones"
+                component={AddRentDrone}
                 options={{headerShown: false}}
               />
               <Stack.Screen

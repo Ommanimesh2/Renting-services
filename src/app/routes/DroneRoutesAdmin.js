@@ -1,25 +1,40 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import RentDrones from '../../features/DroneAdmin/RentDrones';
-import AddRentDrone from '../../features/DroneAdmin/AddRentDrone';
+import AddRentDrone from '../../features/DroneAdmin/components/AddRentDrone';
 import Vieworders from '../../features/DroneAdmin/Vieworders';
 import ViewQueries from '../../features/DroneAdmin/ViewQueries';
+import HomeDrone from '../../features/DroneAdmin/HomeDrone';
 
 const DroneRoutesAdmin = () => {
     const Tab = createBottomTabNavigator();
+    const [selectedTab, setSelectedTab] = useState('OrdersDrone');
+
+    const handleTabPress = (tabName) => {
+      setSelectedTab(tabName);
+    };
 
   return (
     <Tab.Navigator>
       <Tab.Screen
         name="ViewRentDrones"
-        component={RentDrones}
+        component={HomeDrone}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            handleTabPress('Home');
+          },
+        })}
         options={{
           tabBarIcon: ({color}) => (
             <Image
-              // style={styles.bottomTabIcon}
-              source={require('../assets/Machines.png')}
-            />
+            source={
+              selectedTab === 'Home'
+                ? require('../../features/DroneAdmin/assets/login.png')
+                : require('../../features/DroneAdmin/assets/home.png')
+            }
+          
+          />
           ),
 
           tabBarActiveTintColor: '#0F623D',
@@ -29,13 +44,14 @@ const DroneRoutesAdmin = () => {
         }}
       />
       <Tab.Screen
-        name="AddDrones"
-        component={AddRentDrone}
+        name="RentDrones"
+        component={RentDrones}
         options={{
           tabBarIcon: ({color}) => (
             <Image
               // style={styles.bottomTabIcon}
-              source={require('../assets/Add.png')}
+              source={require('../../features/DroneAdmin/assets/login.png')}
+
             />
           ),
           tabBarLabel: 'Add',
@@ -51,26 +67,11 @@ const DroneRoutesAdmin = () => {
           tabBarIcon: ({color}) => (
             <Image
               // style={styles.bottomTabIcon}
-              source={require('../assets/category.png')}
+              source={require('../../features/DroneAdmin/assets/category.png')}
+
             />
           ),
           tabBarLabel: 'Orders',
-          tabBarActiveTintColor: '#0F623D',
-          tabBarInactiveTintColor: 'gray',
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="QuerysDrone"
-        component={ViewQueries}
-        options={{
-          tabBarIcon: ({color}) => (
-            <Image
-              style={{height: 30, width: 30}}
-              source={require('../assets/query.png')}
-            />
-          ),
-          tabBarLabel: 'Query',
           tabBarActiveTintColor: '#0F623D',
           tabBarInactiveTintColor: 'gray',
           headerShown: false,
