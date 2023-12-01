@@ -18,13 +18,16 @@ import UniqueQuery from './src/features/admin/UniqueQuery';
 import DroneRoutesAdmin from './src/app/routes/DroneRoutesAdmin';
 import AddRentDrone from './src/features/DroneAdmin/components/AddRentDrone';
 import AddMaintainer from './src/features/DroneAdmin/components/AddMaintainer';
+import OperatorRoutes from './src/app/routes/OperatorRoutes';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(false);
+  const [userKeys, setUserKeys] = useState([]);
   useEffect(() => {
     setTimeout(async () => {
       const keys: any = await getCredentials();
-      console.log(' thes are keys', keys);
+      console.log('thes are keys', keys);
+      setUserKeys(keys);
       if (!keys) {
         setIsAuth(false);
       } else {
@@ -39,16 +42,30 @@ const App = () => {
         <Stack.Navigator>
           {isAuth ? (
             <>
+              {userKeys?.isDroneAdmin && (
                 <Stack.Screen
-                 name="adminDroneRoutes"
-                 component={DroneRoutesAdmin}
-                 options={{headerShown: false}}
-               />
-              <Stack.Screen
-                name="adminRoutes"
-                component={AdminRoutes}
-                options={{headerShown: false}}
-              />
+                  name="adminDroneRoutes"
+                  component={DroneRoutesAdmin}
+                  options={{headerShown: false}}
+                />
+              )}
+
+              {userKeys?.isKVKAdmin && (
+                <Stack.Screen
+                  name="adminRoutes"
+                  component={AdminRoutes}
+                  options={{headerShown: false}}
+                />
+              )}
+
+              {userKeys?.isOperator && (
+                <Stack.Screen
+                  name="operatorRoutes"
+                  component={OperatorRoutes}
+                  options={{headerShown: false}}
+                />
+              )}
+
               <Stack.Screen
                 name="uniqueMachine"
                 initialParams={{itemId: 21}}
@@ -59,12 +76,12 @@ const App = () => {
                 name="AddDrones"
                 component={AddRentDrone}
                 options={{headerShown: false}}
-              /> 
-               <Stack.Screen
-              name="AddMaintainer"
-              component={AddMaintainer}
-              options={{headerShown: false}}
-            />
+              />
+              <Stack.Screen
+                name="AddMaintainer"
+                component={AddMaintainer}
+                options={{headerShown: false}}
+              />
               <Stack.Screen
                 name="uniqueOrder"
                 initialParams={{orderId: 21}}
@@ -90,22 +107,22 @@ const App = () => {
                 component={Signup}
                 options={{headerShown: false}}
               />
-               <Stack.Screen
+              <Stack.Screen
                 name="AddDrones"
                 component={AddRentDrone}
                 options={{headerShown: false}}
               />
               <Stack.Screen
-              name="AddMaintainer"
-              component={AddMaintainer}
-              options={{headerShown: false}}
-            />
+                name="AddMaintainer"
+                component={AddMaintainer}
+                options={{headerShown: false}}
+              />
               <Stack.Screen
                 name="login"
                 component={Login}
                 options={{headerShown: false}}
               />
-                <Stack.Screen
+              <Stack.Screen
                 name="adminDroneRoutes"
                 component={DroneRoutesAdmin}
                 options={{headerShown: false}}

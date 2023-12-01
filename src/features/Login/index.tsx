@@ -18,7 +18,8 @@ import {useLoginMutation} from '../../app/api/apiSlice';
 import ScreenWrapper from '../../app/components/ScreenWrapper';
 import {RootState} from '../../app/store';
 import strings from '../../helpers/LocalisedStrings';
-const Login = ({navigation}: any) => {
+const Login = ({navigation, route}: any) => {
+  const {admin} = route.params;
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
   const [emailMsg, setemailMsg] = useState('');
@@ -107,10 +108,28 @@ const Login = ({navigation}: any) => {
       console.log(userData);
       setLoading(false);
       if (userData.data?.user) {
-        setCredentials(userData.data.user);
-        setPwd('');
-        setUser('');
-        navigation.navigate('adminDroneRoutes');
+        if (userData?.data?.user.isDroneAdmin && admin === 'drone') {
+          setCredentials(userData.data.user);
+          setPwd('');
+          setUser('');
+          navigation.navigate('adminDroneRoutes');
+        } else if (userData?.data?.user.isKVKAdmin && admin === 'kvk') {
+          setCredentials(userData.data.user);
+          setPwd('');
+          setUser('');
+          navigation.navigate('adminRoutes');
+        } else if (userData?.data?.user?.isOperator && admin === 'operator') {
+          setCredentials(userData.data.user);
+          setPwd('');
+          setUser('');
+          navigation.navigate('operatorRoutes');
+        } else {
+          setPwd('');
+          setUser('');
+          seterrMsg(
+            `You don't seem to have a ${admin} admin account \n Contact bhoomicam support`,
+          );
+        }
       } else if (userData.data.message) {
         setPwd('');
         setUser('');

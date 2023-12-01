@@ -30,6 +30,8 @@ const UniqueProductScreen = ({route, navigation}) => {
     content = machines;
     console.log(machines);
   } else if (error) {
+    console.log(itemId);
+    console.log(error);
     Alert.alert('check your network connection');
   } else if (isLoading) {
     content = <Loading />;
@@ -38,7 +40,7 @@ const UniqueProductScreen = ({route, navigation}) => {
     <>
       {!isLoading ? (
         <>
-          <Header text={content.Name} />
+          <Header text={content?.Name} />
           <ScreenWrapper>
             <View>
               <Image
@@ -48,18 +50,18 @@ const UniqueProductScreen = ({route, navigation}) => {
                   width: '100%',
                   marginTop: 20,
                 }}
-                source={{uri: `${content.rentimage}`}}
+                source={{uri: `${content?.rentimage}`}}
               />
               <View style={styles.container}>
-                <Text style={styles.head}>{content.Name}</Text>
+                <Text style={styles.head}>{content?.Name}</Text>
                 <Text style={styles.title}>{strings.MACHINE_DETAILS}</Text>
-                <Text style={styles.input}>{content.MachineDetails}</Text>
+                <Text style={styles.input}>{content?.MachineDetails}</Text>
                 <Text style={styles.title}>{strings.PHONE_NUMBER}</Text>
-                <Text style={styles.input}>{content.Contact}</Text>
+                <Text style={styles.input}>{content?.Contact}</Text>
                 <Text style={styles.title}>{strings.PRICE}</Text>
-                <Text style={styles.input}>{content.Price}</Text>
+                <Text style={styles.input}>{content?.Price}</Text>
                 <Text style={styles.title}>{strings.DATE}</Text>
-                <Text style={styles.input}>{content.date}</Text>
+                <Text style={styles.input}>{content?.date}</Text>
               </View>
               <Button
                 onPress={() => {

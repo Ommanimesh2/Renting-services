@@ -43,9 +43,9 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://ommanimesh.pythonanywhere.com',
+    baseUrl: 'https://backend.bhoomicam.com',
   }),
-  tagTypes: ['Machines', 'User', 'Query','Orders'],
+  tagTypes: ['Machines', 'User', 'Query', 'Orders'],
   endpoints: builder => ({
     signUp: builder.mutation({
       query: initialPost => ({

@@ -12,7 +12,13 @@ import logo from '../../app/assets/logo.png';
 const MainLogin = ({navigation}) => {
   return (
     <ScreenWrapper>
-      <View>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
         <View style={styles.logo}>
           <Image source={logo} />
         </View>
@@ -28,16 +34,40 @@ const MainLogin = ({navigation}) => {
           }}>
           ADMIN
         </Text>
-        <View>
+        <View style={styles.btnContainer}>
           <Pressable
             style={styles.mainBtn}
-            onPress={() => navigation.navigate('login')}>
+            onPress={() => navigation.navigate('login', {admin: 'kvk'})}>
             <View>
               <Text
                 style={{
                   color: 'white',
                 }}>
-                Login
+                Login as KVK Admin
+              </Text>
+            </View>
+          </Pressable>
+          <Pressable
+            style={styles.mainBtn}
+            onPress={() => navigation.navigate('login', {admin: 'drone'})}>
+            <View>
+              <Text
+                style={{
+                  color: 'white',
+                }}>
+                Login as Drone Admin
+              </Text>
+            </View>
+          </Pressable>
+          <Pressable
+            style={styles.mainBtn}
+            onPress={() => navigation.navigate('login', {admin: 'operator'})}>
+            <View>
+              <Text
+                style={{
+                  color: 'white',
+                }}>
+                Login as Drone Operator
               </Text>
             </View>
           </Pressable>
@@ -51,7 +81,6 @@ export default MainLogin;
 
 const styles = StyleSheet.create({
   logo: {
-    paddingHorizontal: 80,
     paddingTop: 130,
   },
   header: {
@@ -68,7 +97,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#0F623D',
-    marginHorizontal: 16,
-    marginVertical: 15,
+  },
+  btnContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    rowGap: 18,
+    justifyContent: 'center',
   },
 });
