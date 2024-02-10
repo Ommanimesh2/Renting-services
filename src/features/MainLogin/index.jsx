@@ -61,7 +61,7 @@ const MainLogin = ({navigation}) => {
           </Pressable>
           <Pressable
             style={styles.mainBtn}
-            onPress={() => navigation.navigate('login', {admin: 'operator'})}>
+            onPress={() => navigation.navigate('phone', {admin: 'operator'})}>
             <View>
               <Text
                 style={{

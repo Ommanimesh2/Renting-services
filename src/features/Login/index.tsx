@@ -18,6 +18,7 @@ import {useLoginMutation} from '../../app/api/apiSlice';
 import ScreenWrapper from '../../app/components/ScreenWrapper';
 import {RootState} from '../../app/store';
 import strings from '../../helpers/LocalisedStrings';
+import {setCurrUser} from '../admin/Slices/userSlice';
 const Login = ({navigation, route}: any) => {
   const {admin} = route.params;
   const [user, setUser] = useState('');
@@ -113,6 +114,7 @@ const Login = ({navigation, route}: any) => {
           setPwd('');
           setUser('');
           navigation.navigate('adminDroneRoutes');
+          dispatch(setCurrUser(userData.data?.user));
         } else if (userData?.data?.user.isKVKAdmin && admin === 'kvk') {
           setCredentials(userData.data.user);
           setPwd('');

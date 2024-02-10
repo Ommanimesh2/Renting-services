@@ -1,6 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNewAccessTokenMutation} from '../app/api/apiSlice';
 var jwt_decode = require('jwt-decode');
+function generateOTP() {
+  // Generate a random 6-digit OTP
+  const min = 100000; // Minimum value (inclusive)
+  const max = 999999; // Maximum value (exclusive)
+  const otp = Math.floor(Math.random() * (max - min) + min);
+  return otp.toString(); // Convert the number to a string to ensure it's exactly 6 digits
+}
 
 async function getAccessUsingRefresh(refreshToken) {
   console.log(refreshToken);
@@ -107,4 +114,4 @@ const userLoggedIn = async () => {
   const user = await getCredentials();
   return user;
 };
-export {setCredentials, getCredentials, userLoggedIn};
+export {setCredentials, getCredentials, userLoggedIn, generateOTP};

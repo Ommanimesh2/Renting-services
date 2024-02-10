@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import { apiSlice } from './api/apiSlice'
 import userReducer from '../features/admin/Slices/userSlice'
 import imageReducer from '../features/admin/Slices/imageSlice'
+import phoneNumberReducer from '../features/admin/Slices/phoneNumberSlice'
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     user: userReducer,
-    image: imageReducer
+    image: imageReducer,
+    phone: phoneNumberReducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(apiSlice.middleware),

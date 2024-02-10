@@ -43,9 +43,9 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://backend.bhoomicam.com',
+    baseUrl: 'http://127.0.0.1:8000',
   }),
-  tagTypes: ['Machines', 'User', 'Query', 'Orders'],
+  tagTypes: ['Machines', 'User', 'Query', 'Orders', 'Maintainer'],
   endpoints: builder => ({
     signUp: builder.mutation({
       query: initialPost => ({
@@ -54,6 +54,27 @@ export const apiSlice = createApi({
         body: initialPost,
       }),
       providesTags: ['User'],
+    }),
+    operatorSignUp: builder.mutation({
+      query: initialPost => ({
+        url: '/otp/create/',
+        method: 'POST',
+        body: initialPost,
+      }),
+      invalidatesTags: ['Maintainer'],
+    }),
+    addOperator: builder.mutation({
+      query: initialPost => ({
+        url: '/api/drone/maintainer/',
+        method: 'POST',
+        body: initialPost,
+      }),
+      invalidatesTags: ['Maintainer'],
+    }),
+
+    getMaintainersByAdminId: builder.query({
+      query: id => `/api/drone/maintainer_admin/${id}`,
+      providesTags: ['Maintainer'],
     }),
     login: builder.mutation({
       query: initialPost => ({
@@ -70,6 +91,21 @@ export const apiSlice = createApi({
         body: initialPost,
       }),
     }),
+    sendOTP: builder.mutation({
+      query: initialPost => ({
+        url: '/otp/create/',
+        method: 'POST',
+        body: initialPost,
+      }),
+    }),
+    validateOTP: builder.mutation({
+      query: initialPost => ({
+        url: '/otp/validate/',
+        method: 'POST',
+        body: initialPost,
+      }),
+    }),
+
     postRentMachines: builder.mutation({
       query: initialPost => ({
         url: '/api/machine/rentmachine/',
@@ -171,4 +207,9 @@ export const {
   useGetFourImagesByOrderIdQuery,
   useGetAllQueryQuery,
   useMarkQueryResolvedMutation,
+  useAddOperatorMutation,
+  useOperatorSignUpMutation,
+  useSendOTPMutation,
+  useValidateOTPMutation,
+  useGetMaintainersByAdminIdQuery,
 } = apiSlice;

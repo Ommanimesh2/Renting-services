@@ -12,6 +12,8 @@ import AdminRoutes from './src/app/routes/AdminRoutes';
 import UniqueProductScreen from './src/features/admin/UniqueProductScreen';
 import UniqueOrder from './src/features/admin/UniqueOrder';
 import MainLogin from './src/features/MainLogin';
+import OTPInputPage from './src/features/OTP';
+import PhoneNumberInput from './src/features/OTP/PhoneNumber';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UniqueQuery from './src/features/admin/UniqueQuery';
 // import DroneRoutesAdmin from './src/app/routes/DroneRoutesAdmin';
@@ -83,6 +85,16 @@ const App = () => {
                 options={{headerShown: false}}
               />
               <Stack.Screen
+                name="otp"
+                component={OTPInputPage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="phone"
+                component={PhoneNumberInput}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
                 name="uniqueOrder"
                 initialParams={{orderId: 21}}
                 component={UniqueOrder}
@@ -105,6 +117,16 @@ const App = () => {
               <Stack.Screen
                 name="signup"
                 component={Signup}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="otp"
+                component={OTPInputPage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="phone"
+                component={PhoneNumberInput}
                 options={{headerShown: false}}
               />
               <Stack.Screen
