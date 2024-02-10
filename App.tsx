@@ -60,13 +60,13 @@ const App = () => {
                 />
               )}
 
-              {userKeys?.isOperator && (
-                <Stack.Screen
-                  name="operatorRoutes"
-                  component={OperatorRoutes}
-                  options={{headerShown: false}}
-                />
-              )}
+              {/* {!userKeys?.isKVKAdmin && !userKeys?.isDroneAdmin && ( */}
+              <Stack.Screen
+                name="operatorRoutes"
+                component={OperatorRoutes}
+                options={{headerShown: false}}
+              />
+              {/* )} */}
 
               <Stack.Screen
                 name="uniqueMachine"

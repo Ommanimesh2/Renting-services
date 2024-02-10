@@ -47,7 +47,7 @@ const OTPInputPage = ({navigation, route}) => {
       console.log(res);
       setCredentials(res?.data?.user);
       dispatch(setCurrUser(res?.data.user));
-      // navigation.navigate('droneUserRoutes');
+      navigation.navigate('operatorRoutes');
     } else {
       Alert.alert(
         '',
