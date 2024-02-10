@@ -16,8 +16,8 @@ import * as ImagePicker from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import strings from '../../helpers/LocalisedStrings';
 
-import {setURLimage} from '../admin/Slices/imageSlice';
 import * as Progress from 'react-native-progress';
+import {setURLimage} from '../admin/Slices/imageSlice';
 export default function UploadScreen() {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);

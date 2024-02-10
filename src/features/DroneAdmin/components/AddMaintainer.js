@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, Text, View, ScrollView,Image,Pressable,TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, ScrollView,Image,Pressable,TextInput,TouchableOpacity} from 'react-native';
 import Header from '../../../app/components/Header';
 
 const AddMaintainer = () => {

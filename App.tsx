@@ -42,6 +42,7 @@ const App = () => {
         <Stack.Navigator>
           {isAuth ? (
             <>
+            
               {userKeys?.isDroneAdmin && (
                 <Stack.Screen
                   name="adminDroneRoutes"
@@ -97,6 +98,11 @@ const App = () => {
             </>
           ) : (
             <>
+               <Stack.Screen
+                  name="operatorRoutes"
+                  component={OperatorRoutes}
+                  options={{headerShown: false}}
+                />
               <Stack.Screen
                 name="MainLogin"
                 component={MainLogin}
@@ -113,6 +119,11 @@ const App = () => {
                 options={{headerShown: false}}
               />
               <Stack.Screen
+                  name="adminDroneRoutes"
+                  component={DroneRoutesAdmin}
+                  options={{headerShown: false}}
+                />
+              <Stack.Screen
                 name="AddMaintainer"
                 component={AddMaintainer}
                 options={{headerShown: false}}
@@ -122,11 +133,7 @@ const App = () => {
                 component={Login}
                 options={{headerShown: false}}
               />
-              <Stack.Screen
-                name="adminDroneRoutes"
-                component={DroneRoutesAdmin}
-                options={{headerShown: false}}
-              />
+              
               <Stack.Screen
                 name="adminRoutes"
                 component={AdminRoutes}
