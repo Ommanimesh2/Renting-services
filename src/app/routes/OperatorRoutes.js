@@ -8,6 +8,7 @@ import {useSelector} from 'react-redux';
 import ViewAllQuerys from '../../features/admin/ViewAllQuerys';
 import {useEffect, useState} from 'react';
 import OrderList from '../../features/Operator/OrderList';
+import ServiceStart from '../../features/Operator/ServiceStart';
 const Tab = createBottomTabNavigator();
 
 const OperatorRoutes = () => {
@@ -16,6 +17,23 @@ const OperatorRoutes = () => {
       <Tab.Screen
         name="OrderView"
         component={OrderList}
+        options={{
+          tabBarIcon: ({color}) => (
+            <Image
+              // style={styles.bottomTabIcon}
+              source={require('../assets/Machines.png')}
+            />
+          ),
+
+          tabBarActiveTintColor: '#0F623D',
+          tabBarInactiveTintColor: 'gray',
+          tabBarLabel: 'Rent',
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="ServiceStart"
+        component={ServiceStart}
         options={{
           tabBarIcon: ({color}) => (
             <Image

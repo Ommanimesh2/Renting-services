@@ -2,7 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {getCredentials} from '../../helpers/credentials';
 import {StyleSheet, Pressable, Image, Text, View,TouchableHighlight,TouchableOpacity} from 'react-native';
 import Header from '../../app/components/Header';
-import {useSelector} from 'react-redux';
+import {getCredentials} from '../../helpers/credentials';
+import {useDispatch, useSelector} from 'react-redux';
+import {setCurrUser} from '../admin/Slices/userSlice';import {useSelector} from 'react-redux';
 import {
   useGetDroneByAdminIdQuery,
   useGetDroneRentingByAdminIdQuery,
@@ -11,6 +13,16 @@ import DroneCard from '../../app/components/Drones/DroneCard';
 import Loading from '../admin/Loading';
 
 const HomeDrone = ({navigation}) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const giveUser = async () => {
+      try {
+        const user = await getCredentials();
+        dispatch(setCurrUser(user));
+      } catch (error) {}
+    };
+    giveUser();
+  }, []);
   const {currUser, loading} = useSelector(state => state.user);
   const userid = currUser?.id;
   console.log("current:",currUser);

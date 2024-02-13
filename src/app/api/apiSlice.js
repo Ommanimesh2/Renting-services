@@ -43,6 +43,27 @@ export const apiSlice = createApi({
       }),
       providesTags: ['User'],
     }),
+    operatorSignUp: builder.mutation({
+      query: initialPost => ({
+        url: '/otp/create/',
+        method: 'POST',
+        body: initialPost,
+      }),
+      invalidatesTags: ['Maintainer'],
+    }),
+    addOperator: builder.mutation({
+      query: initialPost => ({
+        url: '/api/drone/maintainer/',
+        method: 'POST',
+        body: initialPost,
+      }),
+      invalidatesTags: ['Maintainer'],
+    }),
+
+    getMaintainersByAdminId: builder.query({
+      query: id => `/api/drone/maintainer_admin/${id}`,
+      providesTags: ['Maintainer'],
+    }),
     getProfile: builder.query({
       query: userId => `/user/${userId}/`,
       // transformResponse: res => res.sort((a, b) => b.id - a.id),
@@ -71,6 +92,21 @@ export const apiSlice = createApi({
         body: initialPost,
       }),
     }),
+    sendOTP: builder.mutation({
+      query: initialPost => ({
+        url: '/otp/create/',
+        method: 'POST',
+        body: initialPost,
+      }),
+    }),
+    validateOTP: builder.mutation({
+      query: initialPost => ({
+        url: '/otp/validate/',
+        method: 'POST',
+        body: initialPost,
+      }),
+    }),
+
     sendOTP: builder.mutation({
       query: initialPost => ({
         url: '/otp/create/',
@@ -406,4 +442,7 @@ export const {
   useGetDroneOrderByUserIdQuery,
   usePostDroneQueryMutation,
   useUpdateDroneMaintainerMutation,
+  useAddOperatorMutation,
+  useOperatorSignUpMutation,
+  useGetMaintainersByAdminIdQuery,
 } = apiSlice;

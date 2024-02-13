@@ -1,4 +1,5 @@
 import React from 'react'
+import {StyleSheet, Text,Image, View,Pressable} from 'react-native';
 
 const OperatorOrder = ({props, navigation}) => {
     const {
@@ -32,16 +33,18 @@ const OperatorOrder = ({props, navigation}) => {
 
       <View style={styles.container}>
         <View style={{height: 110, width: '40%', alignItems: 'center'}}>
-          {/* <Image
+          <Image
             style={{height: '100%', width: '90%'}}
-            source={require('../../assets/AvatarBoy.png')}
-          /> */}
+            source={require('../../app/assets/Add.png')}
+          />
         </View>
-        <View
+        <Text
           style={{
-            width: '60%',
+            // width: '60%',
             textAlign: 'left',
             paddingLeft: '10%',
+            display:'flex',
+            flexDirection:'column',
             height: 130,
           }}>
           <Text style={{fontSize: 15, color: '#2E2E2E', fontWeight: 700}}>
@@ -91,7 +94,7 @@ const OperatorOrder = ({props, navigation}) => {
           </Text>
       
           
-        </View>
+        </Text>
       </View>
     </Pressable>
   </>
@@ -99,3 +102,18 @@ const OperatorOrder = ({props, navigation}) => {
 }
 
 export default OperatorOrder
+
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: 140,
+    paddingTop: 15,
+    marginTop: 16,
+    backgroundColor: '#F9FCFE',
+    borderColor: '#F9FCFE',
+  },
+});
