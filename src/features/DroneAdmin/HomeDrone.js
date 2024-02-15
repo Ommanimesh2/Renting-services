@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {getCredentials} from '../../helpers/credentials';
 import {StyleSheet, Pressable, Image, Text, View,TouchableHighlight,TouchableOpacity} from 'react-native';
 import Header from '../../app/components/Header';
 import {getCredentials} from '../../helpers/credentials';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCurrUser} from '../admin/Slices/userSlice';import {useSelector} from 'react-redux';
+import {setCurrUser} from '../admin/Slices/userSlice';
 import {
   useGetDroneByAdminIdQuery,
   useGetDroneRentingByAdminIdQuery,
