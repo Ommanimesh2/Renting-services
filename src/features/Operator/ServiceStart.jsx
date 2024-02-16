@@ -1,14 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import OrderDetail from './components/OrderDetail';
 import Header from '../../app/components/Header';
 const ServiceStart = () => {
   return (
-    <View>
-      <Header text="jlaskjfd" />
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <Header text="Start Service" />
       <OrderDetail />
-      <Text>ServiceStart</Text>
-    </View>
+    </ScrollView>
   );
 };
 

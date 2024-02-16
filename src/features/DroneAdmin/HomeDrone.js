@@ -24,7 +24,7 @@ const HomeDrone = ({navigation}) => {
   }, []);
   const {currUser, loading} = useSelector(state => state.user);
   const userid = currUser?.id;
-  console.log("current:",currUser);
+  // console.log("current:",currUser);
   const [loggedInUser, setLoggedInUser] = useState([]);
 
   let content,
@@ -37,7 +37,7 @@ const HomeDrone = ({navigation}) => {
       try {
         const use = await getCredentials();
         setLoggedInUser(use);
-        console.log(use,"hello");
+        // console.log(use,"hello");
       } catch (error) {}
     };
     giveUser();

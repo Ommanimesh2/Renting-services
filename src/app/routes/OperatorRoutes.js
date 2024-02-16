@@ -31,7 +31,7 @@ const OperatorRoutes = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="ServiceStart"
         component={ServiceStart}
         options={{
@@ -47,7 +47,7 @@ const OperatorRoutes = () => {
           tabBarLabel: 'Rent',
           headerShown: false,
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

@@ -76,7 +76,6 @@ if (isSuccess) {
   return (
     <>
     <Header text='Orders'/>
-      <Text>View Orders</Text>
       <View style={{}}>{content}</View>
     </>
   )

@@ -21,6 +21,7 @@ import DroneRoutesAdmin from './src/app/routes/DroneRoutesAdmin';
 import AddRentDrone from './src/features/DroneAdmin/components/AddRentDrone';
 import AddMaintainer from './src/features/DroneAdmin/components/AddMaintainer';
 import OperatorRoutes from './src/app/routes/OperatorRoutes';
+import ServiceStart from './src/features/Operator/ServiceStart';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(false);
@@ -86,6 +87,11 @@ const App = () => {
                 options={{headerShown: false}}
               />
               <Stack.Screen
+              name="serviceStart"
+              component={ServiceStart}
+              options={{headerShown: false}}
+            />
+              <Stack.Screen
                 name="otp"
                 component={OTPInputPage}
                 options={{headerShown: false}}
@@ -110,12 +116,17 @@ const App = () => {
             </>
           ) : (
             <>
-               <Stack.Screen
-                  name="operatorRoutes"
-                  component={OperatorRoutes}
-                  options={{headerShown: false}}
-                />
-              <Stack.Screen
+            <Stack.Screen
+              name="operatorRoutes"
+              component={OperatorRoutes}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+            name="serviceStart"
+            component={ServiceStart}
+            options={{headerShown: false}}
+          />
+              <Stack.Screen 
                 name="MainLogin"
                 component={MainLogin}
                 options={{headerShown: false}}

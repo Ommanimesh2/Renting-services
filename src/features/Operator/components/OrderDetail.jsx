@@ -1,7 +1,36 @@
-import {StyleSheet, Text, View, Pressable, Image} from 'react-native';
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  TouchableHighlight,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import phone from '../../../app/assets/phone.png';
+import strings from '../../../helpers/LocalisedStrings';
+
 const OrderDetail = () => {
+  const [countdown, setCountdown] = useState(100);
+  const [isShow, setIsShow] = useState(false);
+  const [resendButtonDisabled, setResendButtonDisabled] = useState(false);
+  useEffect(() => {
+    setResendButtonDisabled(true);
+    let seconds = 100;
+    const intervalId = setInterval(() => {
+      setCountdown(seconds);
+      seconds -= 1;
+
+      if (seconds < 0) {
+        // Reset the countdown and enable the button when the countdown reaches 0
+        clearInterval(intervalId);
+        setCountdown(0);
+        setResendButtonDisabled(false);
+      }
+    }, 1000);
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.controls}>
@@ -25,6 +54,65 @@ const OrderDetail = () => {
           </View>
         </Pressable>
       </View>
+      <Pressable
+        style={styles.mainBtn}
+        onPress={() => {
+          setIsShow(true);
+        }}>
+        <View>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 16,
+              fontWeight: 600,
+            }}>
+            Start Flying Drone
+          </Text>
+        </View>
+      </Pressable>
+      <View
+        style={{
+          borderWidth: 0.5,
+          marginTop: 15,
+          borderColor: 'gray',
+          width: '85%',
+        }}></View>
+      {isShow ? (
+        <>
+          <View style={styles.container}>
+            <Text style={styles.header}>Enter OTP to start the service</Text>
+            <TextInput
+              style={styles.input}
+              // value={otp}
+              // onChangeText={text => setOTP(text)}
+              maxLength={6}
+            />
+            <TouchableOpacity style={styles.mainBtn}>
+              <View>
+                <Text style={{color: 'white'}}>{strings.VALIDATE_OTP}</Text>
+              </View>
+            </TouchableOpacity>
+            <View>
+              {countdown > 0 ? (
+                <Text style={{fontSize: 14, marginTop: 10, fontWeight: 500}}>
+                  {strings.RESEND_OTP} {countdown} s
+                </Text>
+              ) : (
+                <TouchableOpacity
+                  style={styles.resendBtn}
+                  disabled={resendButtonDisabled}
+                  onPress={handleResendOTP}>
+                  <View>
+                    <Text style={{color: 'white'}}>{strings.RESEND_OTP}</Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+        </>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
@@ -36,6 +124,36 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     paddingTop: 30,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  input: {
+    width: 200,
+    height: 40,
+    borderWidth: 1,
+    borderColor: 'gray',
+    textAlign: 'center',
+    fontSize: 18,
+    margin: 10,
+  },
+  mainBtn: {
+    width: '85%',
+    height: 50,
+    display: 'flex',
+    borderRadius: 5,
+    marginTop: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0F623D',
+  },
+  btnContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    rowGap: 18,
+    justifyContent: 'center',
   },
   flex: {
     display: 'flex',

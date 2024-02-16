@@ -243,7 +243,7 @@ export const apiSlice = createApi({
         url: '/api/drone/rentdrone/',
         method: 'POST',
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data ',
         },
         body: initialPost,
       }),

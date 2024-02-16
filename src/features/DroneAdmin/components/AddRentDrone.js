@@ -27,7 +27,8 @@ const AddRentDrone = ({navigation}) => {
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
   };
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
+  const [image, setImage] = useState({uri: '', type: ''});
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
   const [name, setName] = useState('');
@@ -36,12 +37,52 @@ const AddRentDrone = ({navigation}) => {
   const [contact, setContact] = useState('');
   const [newform, setNewForm] = useState(new FormData());
   const {currUser, loading} = useSelector(state => state.user);
-  const selectImage = async () => {
-    const formData = new FormData();
+  const parseUri = uri => {
+    // Extract the file name from the URI
+    const fileName = uri.split('/').pop();
 
+    // Extract the file extension from the file name
+    const fileExtension = fileName.split('.').pop();
+
+    // Determine the type based on the file extension
+    let fileType;
+    switch (fileExtension.toLowerCase()) {
+      case 'jpg':
+        fileType = 'image/jpg';
+      case 'jpeg':
+        fileType = 'image/jpeg';
+      case 'png':
+        fileType = 'image/png';
+      case 'gif':
+        fileType = 'image/gif';
+      case 'bmp':
+        fileType = 'image/bmp';
+      case 'tiff ':
+        fileType = 'image/tiff ';
+      case 'tif':
+        fileType = 'image/tif';
+      case 'webp':
+        fileType = 'image/webp';
+      case 'svg':
+        fileType = 'image/svg';
+        break;
+      // Add more cases for other file types as needed
+      default:
+        fileType = 'Unknown';
+    }
+
+    // Return an object with the type and name
+    return {
+      type: fileType,
+      name: fileName,
+    };
+  };
+
+  const selectImage = async () => {
     const options = {
-      maxWidth: 2000,
-      maxHeight: 2000,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.1,
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -57,60 +98,62 @@ const AddRentDrone = ({navigation}) => {
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-      } else {
-        const source = {uri: response.assets[0].uri};
-        const {uri} = source;
-        const filename = uri.substring(uri.lastIndexOf('/') + 1);
-        const uploadUri =
-          Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-
-        setUploading(true);
-        setTransferred(0);
-
-        formData.append('rentimage', {
-          uri: uploadUri,
-          type: 'image/jpeg',
-          name: filename,
+      } else if (response?.assets !== undefined && response?.assets !== null) {
+        setImage({
+          uri: response?.assets[0].uri,
+          type: response?.assets[0].type,
         });
         console.log(response);
         Alert.alert('Photo uploaded!', 'The photo was uploaded successfully');
+      } else {
+        console.log('object error');
       }
     } catch (error) {
       console.error('Error picking image:', error);
     } finally {
       setUploading(false);
     }
-
-    console.log('image', formData);
-    setNewForm(formData);
   };
-
-
-  console.log(newform.getParts('rentimage'));
+  console.log(new Date('2024-02-16').toISOString().split('T')[0]);
+  const droneId = 4;
   const [postRentDrone] = usePostRentDronesMutation();
   const handleclick = async () => {
-    const finalformData=new FormData();
-const droneId = 1;
-    finalformData.append('Drone', droneId);
-    finalformData.append('Name', 'kfuyg');
-    finalformData.append('DroneDetails', 'lpkou');
-    finalformData.append('isProvidingChemicals', false)
-    finalformData.append('rentimage',newform.getParts('rentimage'));
     try {
+      const formData = new FormData();
 
-      const response = await postRentDrone(finalformData,{
+      if (image?.uri !== '') {
+        formData.append('rentimage', {
+          uri: image.uri,
+          type: parseUri(image.uri).type,
+          name: parseUri(image.uri).name,
+        });
+      }
+
+      formData.append('drone', '5');
+      formData.append('Name', 'kfuyg');
+      formData.append('DroneDetails', 'lpkou');
+      formData.append('Price', 500);
+      formData.append('UnitforPrice', 'Acre');
+      formData.append('Contact', 6260718848);
+      formData.append(
+        'date',
+        new Date('2024-02-16').toISOString().split('T')[0],
+      );
+      console.log(formData);
+
+      const response = await postRentDrone(formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
-        },  
-      } );
+          'Content-Type': 'multipart/form-data; ',
+        },
+      });
 
-      console.log(response, 'dfg');
+      console.log(response, 'dfg-error');
 
       if (response.error) {
         Alert.alert('Error');
       } else {
         Alert.alert('ORDER_SUCCESSFUL');
-        navigation.navigate('ViewRentDrones');
+        // navigation.navigate('ViewRentDrones');
       }
     } catch (error) {
       console.log(error);
