@@ -322,7 +322,7 @@ export const apiSlice = createApi({
       invalidatesTags: ['Orders'],
       providesTags: ['Orders'],
     }),
-    
+
     getDroneByAdminId: builder.query({
       query: Admin_id => `/api/drone/drone_admin/${Admin_id}`,
       invalidatesTags: ['Drones'],
@@ -363,7 +363,7 @@ export const apiSlice = createApi({
       invalidatesTags: ['Drones'],
     }),
     updateDroneOrder: builder.mutation({
-      query: (initialPatch) => ({
+      query: initialPatch => ({
         url: `/api/drone/rentinfo/${initialPatch.id}`, // Assuming droneId is part of initialPatch
         method: 'PATCH',
         body: initialPatch,
@@ -371,7 +371,7 @@ export const apiSlice = createApi({
       invalidatesTags: ['Orders'],
     }),
     updateDroneMaintainer: builder.mutation({
-      query: (initialPatch) => ({
+      query: initialPatch => ({
         url: `/api/drone/maintainer/${initialPatch.id}`, // Assuming droneId is part of initialPatch
         method: 'PATCH',
         body: initialPatch,

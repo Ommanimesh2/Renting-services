@@ -13,33 +13,47 @@ import Header from '../../../app/components/Header';
 import {
   useAddOperatorMutation,
   useOperatorSignUpMutation,
+  useUpdateProfileMutation,
 } from '../../../app/api/apiSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
 const AddMaintainer = ({navigation, route}) => {
   const {currUser, loading} = useSelector(state => state.user);
-  // Name_Maintainer = models.CharField(max_length=300)
-  // Email_Maintainer = models.EmailField(max_length=300)
-  // Contact_Maintainer = models.BigIntegerField()
+
   const initialState = {
     Name_Maintainer: '',
     Email_Maintainer: '',
     Contact_Maintainer: '',
     Drone_Admin: currUser?.id,
+    userId: 2,
   };
   const [addOperator, {isLoading, isError}] = useAddOperatorMutation();
   const [operatorSignUp] = useOperatorSignUpMutation();
+  const [updateProfile] = useUpdateProfileMutation();
   const [payload, setPayload] = useState(initialState);
   const handleInputChange = (field, value) => {
     setPayload({...payload, [field]: value});
   };
   const handleSubmit = async () => {
-    console.log(payload);
-    const response = await addOperator(payload);
-    const makeAccount = await operatorSignUp({
-      phone_no: payload.Contact_Maintainer,
-    });
-    navigation.goBack();
+    try {
+      console.log(payload);
+      const makeAccount = await operatorSignUp({
+        phone_no: payload.Contact_Maintainer,
+      });
+      console.log('user is', makeAccount);
+      payload.userId = makeAccount?.data?.user?.id;
+      const response = await addOperator(payload);
+      console.log(response);
+      const userUpdate = {
+        id: makeAccount?.data?.user?.id,
+        isOperator: true,
+      };
+      const updation = await updateProfile(userUpdate);
+      console.log(updation);
+      // navigation.goBack();
+    } catch (error) {
+      console.log('object', error);
+    }
   };
   return (
     <View>

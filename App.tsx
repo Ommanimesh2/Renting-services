@@ -45,7 +45,6 @@ const App = () => {
         <Stack.Navigator>
           {isAuth ? (
             <>
-            
               {userKeys?.isDroneAdmin && (
                 <Stack.Screen
                   name="adminDroneRoutes"
@@ -62,13 +61,13 @@ const App = () => {
                 />
               )}
 
-              {/* {!userKeys?.isKVKAdmin && !userKeys?.isDroneAdmin && ( */}
-              <Stack.Screen
-                name="operatorRoutes"
-                component={OperatorRoutes}
-                options={{headerShown: false}}
-              />
-              {/* )} */}
+              {userKeys?.isOperator && (
+                <Stack.Screen
+                  name="operatorRoutes"
+                  component={OperatorRoutes}
+                  options={{headerShown: false}}
+                />
+              )}
 
               <Stack.Screen
                 name="uniqueMachine"
@@ -87,10 +86,10 @@ const App = () => {
                 options={{headerShown: false}}
               />
               <Stack.Screen
-              name="serviceStart"
-              component={ServiceStart}
-              options={{headerShown: false}}
-            />
+                name="serviceStart"
+                component={ServiceStart}
+                options={{headerShown: false}}
+              />
               <Stack.Screen
                 name="otp"
                 component={OTPInputPage}
@@ -116,17 +115,12 @@ const App = () => {
             </>
           ) : (
             <>
-            <Stack.Screen
-              name="operatorRoutes"
-              component={OperatorRoutes}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-            name="serviceStart"
-            component={ServiceStart}
-            options={{headerShown: false}}
-          />
-              <Stack.Screen 
+              <Stack.Screen
+                name="operatorRoutes"
+                component={OperatorRoutes}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
                 name="MainLogin"
                 component={MainLogin}
                 options={{headerShown: false}}
@@ -147,15 +141,20 @@ const App = () => {
                 options={{headerShown: false}}
               />
               <Stack.Screen
+                name="operatorRoutes"
+                component={OperatorRoutes}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
                 name="AddDrones"
                 component={AddRentDrone}
                 options={{headerShown: false}}
               />
               <Stack.Screen
-                  name="adminDroneRoutes"
-                  component={DroneRoutesAdmin}
-                  options={{headerShown: false}}
-                />
+                name="adminDroneRoutes"
+                component={DroneRoutesAdmin}
+                options={{headerShown: false}}
+              />
               <Stack.Screen
                 name="AddMaintainer"
                 component={AddMaintainer}
@@ -166,7 +165,7 @@ const App = () => {
                 component={Login}
                 options={{headerShown: false}}
               />
-              
+
               <Stack.Screen
                 name="adminRoutes"
                 component={AdminRoutes}

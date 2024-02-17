@@ -45,8 +45,19 @@ const Maintainers = ({navigation}) => {
         </>
       ) : (
         <View>
-          <Image source={require('./assets/bxs_user-x.png')} />
-          <Text style={styles.hometxt}>No Maintainers to show</Text>
+          <View>
+            <Image source={require('./assets/bxs_user-x.png')} />
+            <Text style={styles.hometxt}>No Maintainers to show</Text>
+          </View>
+          <View style={styles.HomeDronesContainer}>
+            <Pressable
+              style={styles.AddButton}
+              onPress={() => {
+                navigation.navigate('AddMaintainer');
+              }}>
+              <Text style={styles.buttontxt}>Add Maintainers</Text>
+            </Pressable>
+          </View>
         </View>
       )}
     </View>
