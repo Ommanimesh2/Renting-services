@@ -37,6 +37,11 @@ const AddRentDrone = ({navigation}) => {
   const [contact, setContact] = useState('');
   const [newform, setNewForm] = useState(new FormData());
   const {currUser, loading} = useSelector(state => state.user);
+  const today= new Date();
+  const year = today.getFullYear();
+  const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based, so add 1
+  const day = today.getDate().toString().padStart(2, '0');
+  const placedDate = `${year}-${month}-${day}`;
   const parseUri = uri => {
     // Extract the file name from the URI
     const fileName = uri.split('/').pop();
@@ -114,38 +119,39 @@ const AddRentDrone = ({navigation}) => {
       setUploading(false);
     }
   };
-  console.log(new Date('2024-02-16').toISOString().split('T')[0]);
+  console.log(placedDate);
   const droneId = 4;
   const [postRentDrone] = usePostRentDronesMutation();
   const handleclick = async () => {
     try {
       const formData = new FormData();
 
-      if (image?.uri !== '') {
-        formData.append('rentimage', {
-          uri: image.uri,
-          type: parseUri(image.uri).type,
-          name: parseUri(image.uri).name,
-        });
-      }
+      // if (image?.uri !== '') {
+      //   formData.append('rentimage', {
+      //     uri: image.uri,
+      //     type: parseUri(image.uri).type,
+      //     name: parseUri(image.uri).name,
+      //   });
+      // }
 
-      formData.append('drone', '5');
+      formData.append('drone', droneId);
       formData.append('Name', 'kfuyg');
       formData.append('DroneDetails', 'lpkou');
       formData.append('Price', 500);
-      formData.append('UnitforPrice', 'Acre');
-      formData.append('Contact', 6260718848);
-      formData.append(
-        'date',
-        new Date('2024-02-16').toISOString().split('T')[0],
-      );
+      // formData.append('UnitforPrice', 'Acre');
+      formData.append('Contact', 62607848);
+      formData.append('TimeSlotsNo', 2);
+      formData.append('BookedStatus', false);
+      formData.append('isProvidingChemicals', false);
+      formData.append('date',placedDate);
       console.log(formData);
 
-      const response = await postRentDrone(formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data; ',
-        },
-      });
+      const response = await postRentDrone(
+        formData,
+   {     headers: {
+          'Content-Type': 'multipart/form-data',
+        },}
+      );
 
       console.log(response, 'dfg-error');
 

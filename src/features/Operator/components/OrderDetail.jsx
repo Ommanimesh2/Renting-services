@@ -12,7 +12,7 @@ import React, {useState, useEffect} from 'react';
 import phone from '../../../app/assets/phone.png';
 import strings from '../../../helpers/LocalisedStrings';
 
-const OrderDetail = () => {
+const OrderDetail = ({navigation}) => {
   const [countdown, setCountdown] = useState(100);
   const [isShow, setIsShow] = useState(false);
   const [resendButtonDisabled, setResendButtonDisabled] = useState(false);
@@ -87,7 +87,7 @@ const OrderDetail = () => {
               // onChangeText={text => setOTP(text)}
               maxLength={6}
             />
-            <TouchableOpacity style={styles.mainBtn}>
+            <TouchableOpacity style={styles.mainBtn} onPress={()=>{navigation.navigate('timeCount')}}>
               <View>
                 <Text style={{color: 'white'}}>{strings.VALIDATE_OTP}</Text>
               </View>
@@ -101,7 +101,7 @@ const OrderDetail = () => {
                 <TouchableOpacity
                   style={styles.resendBtn}
                   disabled={resendButtonDisabled}
-                  onPress={handleResendOTP}>
+                  >
                   <View>
                     <Text style={{color: 'white'}}>{strings.RESEND_OTP}</Text>
                   </View>

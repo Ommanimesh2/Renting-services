@@ -328,6 +328,11 @@ export const apiSlice = createApi({
       invalidatesTags: ['Drones'],
       providesTags: ['Drones'],
     }),
+    getDroneById: builder.query({
+      query: id => `/api/drone/drone/${id}`,
+      invalidatesTags: ['Drones'],
+      providesTags: ['Drones'],
+    }),
     getDroneRentingByAdminId: builder.query({
       query: Admin_id => `/api/drone/drone_rentings/${Admin_id}`,
       invalidatesTags: ['Drones'],
@@ -411,6 +416,7 @@ export const {
   usePostOrderMutation,
   useGetDroneOrderByIdQuery,
   useUpdateDroneOrderMutation,
+  useGetDroneByIdQuery,
   usePostQueryMutation,
   useGetMaintainerbyAdminIdQuery,
   useUpdateProfileMutation,

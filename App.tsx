@@ -22,6 +22,8 @@ import AddRentDrone from './src/features/DroneAdmin/components/AddRentDrone';
 import AddMaintainer from './src/features/DroneAdmin/components/AddMaintainer';
 import OperatorRoutes from './src/app/routes/OperatorRoutes';
 import ServiceStart from './src/features/Operator/ServiceStart';
+import TimeCount from './src/features/Operator/TimeCount';
+import ServiceComplete from './src/features/Operator/ServiceComplete';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(false);
@@ -95,6 +97,16 @@ const App = () => {
                 component={OTPInputPage}
                 options={{headerShown: false}}
               />
+                  <Stack.Screen
+            name="timeCount"
+            component={TimeCount}
+            options={{headerShown: false}}
+          />
+           <Stack.Screen
+            name="serviceComplete"
+            component={ServiceComplete}
+            options={{headerShown: false}}
+          />
               <Stack.Screen
                 name="phone"
                 component={PhoneNumberInput}
@@ -115,11 +127,6 @@ const App = () => {
             </>
           ) : (
             <>
-              <Stack.Screen
-                name="operatorRoutes"
-                component={OperatorRoutes}
-                options={{headerShown: false}}
-              />
               <Stack.Screen
                 name="MainLogin"
                 component={MainLogin}
@@ -145,6 +152,21 @@ const App = () => {
                 component={OperatorRoutes}
                 options={{headerShown: false}}
               />
+               <Stack.Screen
+                name="serviceStart"
+                component={ServiceStart}
+                options={{headerShown: false}}
+              />
+                  <Stack.Screen
+            name="timeCount"
+            component={TimeCount}
+            options={{headerShown: false}}
+          />
+           <Stack.Screen
+            name="serviceComplete"
+            component={ServiceComplete}
+            options={{headerShown: false}}
+          />
               <Stack.Screen
                 name="AddDrones"
                 component={AddRentDrone}

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Text, Image, View, Pressable} from 'react-native';
+import {useGetDroneByIdQuery, useGetDroneRentingByAdminIdQuery, useGetRentDroneQuery} from '../../app/api/apiSlice';
 
 const OperatorOrder = ({props, navigation}) => {
   const {
@@ -27,14 +28,28 @@ const OperatorOrder = ({props, navigation}) => {
     start_date,
     time_slots,
   } = props;
+
+  const {
+    data: droneInfo,
+    isSuccess,
+    isLoading,
+    isError,
+  } = useGetRentDroneQuery(Drone_id);
+  if (isSuccess) {
+    console.log(droneInfo, 'ye h sahi');
+  }
+
   return (
     <>
-      <Pressable onPress={()=>{navigation.navigate('serviceStart')}}>
+      <Pressable
+        onPress={() => {
+          navigation.navigate('serviceStart');
+        }}>
         <View style={styles.container}>
           <View style={{height: 110, width: '40%', alignItems: 'center'}}>
             <Image
               style={{height: '100%', width: '90%'}}
-              source={require('../../app/assets/Add.png')}
+              source={{ uri: droneInfo?.rentimage }}
             />
           </View>
           <View

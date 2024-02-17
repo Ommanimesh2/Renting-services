@@ -16,11 +16,9 @@ const OrderList = ({navigation}) => {
   let maincontent;
   const {data: Maintainer, isSuccess, isLoading} = useGetMaintainerQuery(id);
   if (isSuccess) {
-    console.log(Maintainer);
     maincontent = Maintainer;
   }
 
-  console.log(maincontent);
 
   let ordersOperator;
   let mainArr = [];
@@ -36,7 +34,6 @@ const OrderList = ({navigation}) => {
             if (response.ok) {
               const res = await response.json();
               mainArr.push(res);
-              console.log(res);
             } else {
               console.log(response);
             }
@@ -51,7 +48,6 @@ const OrderList = ({navigation}) => {
     fetchData();
   }, [maincontent]);
 
-  console.log(dataArray);
   return (
     <View>
       <Header text="Your Orders" />
@@ -61,7 +57,6 @@ const OrderList = ({navigation}) => {
             <OperatorOrder key={item.id} props={item} navigation={navigation} />
           );
         })}
-      <Service />
     </View>
   );
 };
