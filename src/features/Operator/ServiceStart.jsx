@@ -7,6 +7,7 @@ const ServiceStart = ({navigation}) => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <Header text="Start Service"/>
       <OrderDetail navigation={navigation}/>
+      
     </ScrollView>
   );
 };

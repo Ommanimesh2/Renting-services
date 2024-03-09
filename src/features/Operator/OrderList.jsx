@@ -35,7 +35,7 @@ const OrderList = ({navigation}) => {
               const res = await response.json();
               mainArr.push(res);
             } else {
-              console.log(response);
+              console.log(response.error);
             }
           } catch (error) {
             console.error('Error fetching data:', error);

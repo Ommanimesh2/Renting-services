@@ -33,7 +33,7 @@ const Maintainers = ({navigation}) => {
               return <OperatorComponent operator={maintainer} />;
             })}
           </ScrollView>
-          <View style={styles.HomeDronesContainer}>
+          <View >
             <Pressable
               style={styles.AddButton}
               onPress={() => {
@@ -44,12 +44,9 @@ const Maintainers = ({navigation}) => {
           </View>
         </>
       ) : (
-        <View>
-          <View>
+        <View style={styles.HomeDronesContainer}>
             <Image source={require('./assets/bxs_user-x.png')} />
             <Text style={styles.hometxt}>No Maintainers to show</Text>
-          </View>
-          <View style={styles.HomeDronesContainer}>
             <Pressable
               style={styles.AddButton}
               onPress={() => {
@@ -57,7 +54,6 @@ const Maintainers = ({navigation}) => {
               }}>
               <Text style={styles.buttontxt}>Add Maintainers</Text>
             </Pressable>
-          </View>
         </View>
       )}
     </View>
@@ -67,7 +63,14 @@ const Maintainers = ({navigation}) => {
 export default Maintainers;
 
 const styles = StyleSheet.create({
-  HomeDronesContainer: {},
+  HomeDronesContainer: {
+    height: '95%',
+    width: '100%',
+    textAlign: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   AddButton: {
     width: '100%',
     textAlign: 'center',
