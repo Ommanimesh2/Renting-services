@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  View,
+  View,TouchableHighlight,
   ScrollView,
   Image,
   Pressable,
@@ -28,20 +28,23 @@ const Maintainers = ({navigation}) => {
 
       {isSuccess && maintainers?.length >= 1 ? (
         <>
-          <ScrollView>
+          <ScrollView style={{height:'95%'}}>
             {maintainers?.map(maintainer => {
               return <OperatorComponent operator={maintainer} />;
             })}
           </ScrollView>
-          <View >
-            <Pressable
-              style={styles.AddButton}
-              onPress={() => {
-                navigation.navigate('AddMaintainer');
-              }}>
-              <Text style={styles.buttontxt}>Add Maintainers</Text>
-            </Pressable>
-          </View>
+          <TouchableHighlight onPress={() => {
+          navigation.navigate('AddMaintainer');
+        }}  style={{backgroundColor:'#0F623D', borderRadius:4,width:'40%',paddingVertical:8,paddingHorizontal:12,position:'absolute',bottom:'5%',right:'5%'}}>
+        <View>        
+<Text style={{color: '#FFF',
+
+textAlign: 'center',
+fontFamily: 'Sora',
+fontSize: 16,
+fontWeight: 400 }}>+ Add Maintainer</Text>        
+</View>
+        </TouchableHighlight>
         </>
       ) : (
         <View style={styles.HomeDronesContainer}>

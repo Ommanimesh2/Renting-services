@@ -68,7 +68,7 @@ const HomeDrone = ({navigation}) => {
 
     if (dronerRentings?.length > 0) {
       content = dronerRentings?.map(item => {
-        return <DroneCard props={item}/>
+        return <DroneCard props={item} navigation={navigation}/>
       });
     } else {
       content = <View style={styles.HomeDronesContainer}>

@@ -239,16 +239,16 @@ export const apiSlice = createApi({
     // ************** Rent Drone Queries ****************
 
     postRentDrones: builder.mutation({
-      query: initialPost => ({
+      query: (initialPost) => ({
         url: '/api/drone/rentdrone/',
         method: 'POST',
         headers: {
-          'Content-Type': 'multipart/form-data ',
+          'Content-Type': 'multipart/form-data',
         },
-        body: initialPost,
+        body: (initialPost),
       }),
       invalidatesTags: ['Drones'],
-    }),
+    }),    
     postDroneOrder: builder.mutation({
       query: initialPost => ({
         url: '/api/drone/rentinfo/',

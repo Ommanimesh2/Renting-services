@@ -37,11 +37,13 @@ const AddRentDrone = ({navigation}) => {
   const [contact, setContact] = useState('');
   const [newform, setNewForm] = useState(new FormData());
   const {currUser, loading} = useSelector(state => state.user);
-  const today= new Date();
-  const year = today.getFullYear();
-  const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based, so add 1
-  const day = today.getDate().toString().padStart(2, '0');
-  const placedDate = `${year}-${month}-${day}`;
+  const newDate= new Date();
+  const year = newDate.getFullYear();
+  const month = newDate.getMonth() + 1;
+  const day = newDate.getDate();
+  const placedDate = `${year}-${month.toString().padStart(2, '0')}-${day
+    .toString()
+    .padStart(2, '0')}`;
   const parseUri = uri => {
     // Extract the file name from the URI
     const fileName = uri.split('/').pop();
@@ -120,50 +122,44 @@ const AddRentDrone = ({navigation}) => {
     }
   };
   console.log(placedDate);
-  const droneId = 4;
-  const [postRentDrone] = usePostRentDronesMutation();
+  const droneId = 1;
   const handleclick = async () => {
     try {
       const formData = new FormData();
 
-      // if (image?.uri !== '') {
-      //   formData.append('rentimage', {
-      //     uri: image.uri,
-      //     type: parseUri(image.uri).type,
-      //     name: parseUri(image.uri).name,
-      //   });
-      // }
+      if (image?.uri !== '') {
+        formData.append('rentimage', {
+          uri: image.uri,
+          type: parseUri(image.uri).type,
+          name: parseUri(image.uri).name,
+        });
+      }
 
       formData.append('drone', droneId);
-      formData.append('Name', 'kfuyg');
-      formData.append('DroneDetails', 'lpkou');
-      formData.append('Price', 500);
-      // formData.append('UnitforPrice', 'Acre');
-      formData.append('Contact', 62607848);
-      formData.append('TimeSlotsNo', 2);
-      formData.append('BookedStatus', false);
-      formData.append('isProvidingChemicals', false);
-      formData.append('date',placedDate);
-      console.log(formData);
-
-      const response = await postRentDrone(
-        formData,
-   {     headers: {
+      formData.append('Name', "njjk");
+      formData.append('DroneDetails', "name");
+      formData.append('Price', "60");
+      formData.append('Contact', "541250");
+      formData.append('TimeSlotsNo', "4");
+      formData.append('BookedStatus', "False");
+      formData.append('isProvidingChemicals', "True");
+      formData.append('date', placedDate);
+      const response = await fetch('https://backend.bhoomicam.com/api/drone/rentdrone/', {
+        method: 'POST',
+        body: formData,
+        headers: {
           'Content-Type': 'multipart/form-data',
-        },}
-      );
-
-      console.log(response, 'dfg-error');
-
-      if (response.error) {
-        Alert.alert('Error');
-      } else {
-        Alert.alert('ORDER_SUCCESSFUL');
-        // navigation.navigate('ViewRentDrones');
+        },
+      });
+  
+      console.log("object", response)
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      const responseData = await response.json();
+      console.log(responseData); 
     } catch (error) {
-      console.log(error);
-      Alert.alert(error.message);
+      console.error('Error:', error);
     }
   };
 

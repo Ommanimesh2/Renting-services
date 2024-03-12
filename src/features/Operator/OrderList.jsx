@@ -7,6 +7,7 @@ import {
 } from '../../app/api/apiSlice';
 import OperatorOrder from './OperatorOrder';
 import Service from './components/Service';
+import Loading from '../admin/Loading';
 
 const OrderList = ({navigation}) => {
   const id = 2;
@@ -18,7 +19,9 @@ const OrderList = ({navigation}) => {
   if (isSuccess) {
     maincontent = Maintainer;
   }
-
+if(isLoading){
+  return <Loading/>;
+}
 
   let ordersOperator;
   let mainArr = [];

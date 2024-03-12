@@ -7,6 +7,7 @@ import Vieworders from '../../features/DroneAdmin/Vieworders';
 import ViewQueries from '../../features/DroneAdmin/ViewQueries';
 import HomeDrone from '../../features/DroneAdmin/HomeDrone';
 import Maintainers from '../../features/DroneAdmin/Maintainers';
+import AdmionProfile from '../../features/DroneAdmin/AdmionProfile';
 
 const DroneRoutesAdmin = () => {
     const Tab = createBottomTabNavigator();
@@ -18,6 +19,23 @@ const DroneRoutesAdmin = () => {
 
   return (
     <Tab.Navigator>
+        <Tab.Screen
+        name="OrdersDrone"
+        component={Vieworders}
+        options={{
+          tabBarIcon: ({color}) => (
+            <Image
+              // style={styles.bottomTabIcon}
+              source={require('../../features/DroneAdmin/assets/home.png')}
+
+            />
+          ),
+          tabBarLabel: 'Orders',
+          tabBarActiveTintColor: '#0F623D',
+          tabBarInactiveTintColor: 'gray',
+          headerShown: false,
+        }}
+      />
       <Tab.Screen
         name="ViewRentDrones"
         component={HomeDrone}
@@ -29,12 +47,7 @@ const DroneRoutesAdmin = () => {
         options={{
           tabBarIcon: ({color}) => (
             <Image
-            source={
-              selectedTab === 'Home'
-                ? require('../../features/DroneAdmin/assets/login.png')
-                : require('../../features/DroneAdmin/assets/home.png')
-            }
-          
+            source={ require('../../features/DroneAdmin/assets/category.png') }
           />
           ),
 
@@ -61,14 +74,15 @@ const DroneRoutesAdmin = () => {
           headerShown: false,
         }}
       />
+    
       <Tab.Screen
-        name="OrdersDrone"
-        component={Vieworders}
+        name="Profile"
+        component={AdmionProfile}
         options={{
           tabBarIcon: ({color}) => (
             <Image
               // style={styles.bottomTabIcon}
-              source={require('../../features/DroneAdmin/assets/category.png')}
+              source={require('../../features/DroneAdmin/assets/login.png')}
 
             />
           ),

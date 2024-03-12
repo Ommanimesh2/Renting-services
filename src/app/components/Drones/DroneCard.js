@@ -6,7 +6,7 @@ const DroneCard = ({props, navigation}) => {
   return (
     <>
       <Pressable
-        onPress={() => navigation.navigate('uniqueMachine', {itemId: id})}>
+        onPress={() => navigation.navigate('uniqueDrone', {itemId: id})}>
         <View style={styles.container}>
           <View style={{height: 110, width: '40%', alignItems: 'center'}}>
             <Image

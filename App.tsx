@@ -1,11 +1,11 @@
-import {StyleSheet, Text, View} from 'react-native';
-import {useEffect, useState} from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
 import React from 'react';
-import {store} from './src/app/store';
-import {Provider} from 'react-redux';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
-import {getCredentials} from './src/helpers/credentials';
+import { store } from './src/app/store';
+import { Provider } from 'react-redux';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { getCredentials } from './src/helpers/credentials';
 import Login from './src/features/Login';
 import Signup from './src/features/Signup';
 import AdminRoutes from './src/app/routes/AdminRoutes';
@@ -24,6 +24,7 @@ import OperatorRoutes from './src/app/routes/OperatorRoutes';
 import ServiceStart from './src/features/Operator/ServiceStart';
 import TimeCount from './src/features/Operator/TimeCount';
 import ServiceComplete from './src/features/Operator/ServiceComplete';
+import DroneScreen from './src/features/DroneAdmin/DroneScreen';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(false);
@@ -51,7 +52,7 @@ const App = () => {
                 <Stack.Screen
                   name="adminDroneRoutes"
                   component={DroneRoutesAdmin}
-                  options={{headerShown: false}}
+                  options={{ headerShown: false }}
                 />
               )}
 
@@ -59,7 +60,7 @@ const App = () => {
                 <Stack.Screen
                   name="adminRoutes"
                   component={AdminRoutes}
-                  options={{headerShown: false}}
+                  options={{ headerShown: false }}
                 />
               )}
 
@@ -67,149 +68,159 @@ const App = () => {
                 <Stack.Screen
                   name="operatorRoutes"
                   component={OperatorRoutes}
-                  options={{headerShown: false}}
+                  options={{ headerShown: false }}
                 />
               )}
-
+              <Stack.Screen
+                name="uniqueDrone"
+                component={DroneScreen}
+                options={{ headerShown: false }}
+              />
               <Stack.Screen
                 name="uniqueMachine"
-                initialParams={{itemId: 21}}
+                initialParams={{ itemId: 21 }}
                 component={UniqueProductScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="AddDrones"
                 component={AddRentDrone}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="AddMaintainer"
                 component={AddMaintainer}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="serviceStart"
                 component={ServiceStart}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="otp"
                 component={OTPInputPage}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
-                  <Stack.Screen
-            name="timeCount"
-            component={TimeCount}
-            options={{headerShown: false}}
-          />
-           <Stack.Screen
-            name="serviceComplete"
-            component={ServiceComplete}
-            options={{headerShown: false}}
-          />
+              <Stack.Screen
+                name="timeCount"
+                component={TimeCount}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="serviceComplete"
+                component={ServiceComplete}
+                options={{ headerShown: false }}
+              />
               <Stack.Screen
                 name="phone"
                 component={PhoneNumberInput}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="uniqueOrder"
-                initialParams={{orderId: 21}}
+                initialParams={{ orderId: 21 }}
                 component={UniqueOrder}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="uniqueQuery"
-                initialParams={{user_id: 21}}
+                initialParams={{ user_id: 21 }}
                 component={UniqueQuery}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
             </>
           ) : (
             <>
+             <Stack.Screen
+                name="operatorRoutes"
+                component={OperatorRoutes}
+                options={{ headerShown: false }}
+              />
               <Stack.Screen
                 name="MainLogin"
                 component={MainLogin}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="signup"
                 component={Signup}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="otp"
                 component={OTPInputPage}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="phone"
                 component={PhoneNumberInput}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
+              />
+             
+              <Stack.Screen
+                name="uniqueDrone"
+                component={DroneScreen}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
-                name="operatorRoutes"
-                component={OperatorRoutes}
-                options={{headerShown: false}}
-              />
-               <Stack.Screen
                 name="serviceStart"
                 component={ServiceStart}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
-                  <Stack.Screen
-            name="timeCount"
-            component={TimeCount}
-            options={{headerShown: false}}
-          />
-           <Stack.Screen
-            name="serviceComplete"
-            component={ServiceComplete}
-            options={{headerShown: false}}
-          />
+              <Stack.Screen
+                name="timeCount"
+                component={TimeCount}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="serviceComplete"
+                component={ServiceComplete}
+                options={{ headerShown: false }}
+              />
               <Stack.Screen
                 name="AddDrones"
                 component={AddRentDrone}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="adminDroneRoutes"
                 component={DroneRoutesAdmin}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="AddMaintainer"
                 component={AddMaintainer}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="login"
                 component={Login}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
 
               <Stack.Screen
                 name="adminRoutes"
                 component={AdminRoutes}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="uniqueMachine"
-                initialParams={{itemId: 21}}
+                initialParams={{ itemId: 21 }}
                 component={UniqueProductScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="uniqueOrder"
-                initialParams={{orderId: 21}}
+                initialParams={{ orderId: 21 }}
                 component={UniqueOrder}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="uniqueQuery"
-                initialParams={{user_id: 21}}
+                initialParams={{ user_id: 21 }}
                 component={UniqueQuery}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
             </>
           )}

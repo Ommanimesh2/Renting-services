@@ -21,34 +21,36 @@ const OperatorRoutes = () => {
           tabBarIcon: ({color}) => (
             <Image
               // style={styles.bottomTabIcon}
-              source={require('../assets/Machines.png')}
+              source={require('../../features/DroneAdmin/assets/category.png')}
             />
           ),
 
           tabBarActiveTintColor: '#0F623D',
           tabBarInactiveTintColor: 'gray',
-          tabBarLabel: 'Rent',
+          tabBarLabel: 'Orders',
           headerShown: false,
         }}
       />
-      {/* <Tab.Screen
-        name="ServiceStart"
-        component={ServiceStart}
+    <Tab.Screen
+        name="Profile"
+        component={OrderList}
         options={{
           tabBarIcon: ({color}) => (
             <Image
               // style={styles.bottomTabIcon}
-              source={require('../assets/Machines.png')}
+              source={require('../../features/DroneAdmin/assets/login.png')}
+
             />
           ),
-
+          tabBarLabel: 'Profile',
           tabBarActiveTintColor: '#0F623D',
           tabBarInactiveTintColor: 'gray',
-          tabBarLabel: 'Rent',
           headerShown: false,
         }}
-      /> */}
+      />
     </Tab.Navigator>
+
+    
   );
 };
 

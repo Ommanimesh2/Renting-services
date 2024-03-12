@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, Image, View, Pressable} from 'react-native';
+import {StyleSheet, Text, Image, View, Pressable,TouchableOpacity} from 'react-native';
 import {useGetDroneByIdQuery, useGetDroneRentingByAdminIdQuery, useGetRentDroneQuery} from '../../app/api/apiSlice';
 
 const OperatorOrder = ({props, navigation}) => {
@@ -41,7 +41,7 @@ const OperatorOrder = ({props, navigation}) => {
 
   return (
     <>
-      <Pressable
+      <TouchableOpacity
         onPress={() => {
           navigation.navigate('serviceStart');
         }}>
@@ -60,17 +60,16 @@ const OperatorOrder = ({props, navigation}) => {
               height: 130,
             }}>
             <Text style={{fontSize: 15, color: '#2E2E2E', fontWeight: 700}}>
-              {NearbyLandMark.charAt(0).toUpperCase()}
-              {NearbyLandMark.slice(1)}
+           Order Id : {id*129}
             </Text>
             <Text
               style={{
                 color: '#979999',
                 fontFamily: 'Quicksand',
-                fontSize: 11,
-                fontWeight: 500,
+                fontSize: 12.5,
+                fontWeight: 700,
               }}>
-              {placed_at}
+              Area: {AreaOfField}
             </Text>
             {/* <Text
             style={{
@@ -91,7 +90,7 @@ const OperatorOrder = ({props, navigation}) => {
                 fontWeight: 700,
                 marginTop: 2,
               }}>
-              {start_date}
+            Spray Date: {start_date}
             </Text>
             <Text
               style={{
@@ -100,12 +99,12 @@ const OperatorOrder = ({props, navigation}) => {
                 fontSize: 13.5,
                 fontWeight: 700,
               }}>
-              Price: {OrderAmount}
+              Amount:₹ {OrderAmount}
             </Text>
-            <Text> {DeliverAddress}</Text>
+            <Text>Address: {DeliverAddress}, {NearbyLandMark}</Text>
           </View>
         </View>
-      </Pressable>
+      </TouchableOpacity>
     </>
   );
 };
