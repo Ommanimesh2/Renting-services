@@ -19,37 +19,41 @@ const OrderList = ({navigation}) => {
   if (isSuccess) {
     maincontent = Maintainer;
   }
-if(isLoading){
-  return <Loading/>;
-}
+  if (isLoading) {
+    return <Loading />;
+  }
 
   let ordersOperator;
   let mainArr = [];
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (maincontent && maincontent.OrderIdsAssigned) {
-        for (let i = 0; i < maincontent.OrderIdsAssigned.length; i++) {
-          try {
-            const response = await fetch(
-              `https://backend.bhoomicam.com/api/drone/rentinfo/${maincontent.OrderIdsAssigned[i]}`,
-            );
-            if (response.ok) {
-              const res = await response.json();
-              mainArr.push(res);
-            } else {
-              console.log(response.error);
-            }
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        }
-        setDataArray(mainArr);
-      }
-    };
-
     fetchData();
-  }, [maincontent]);
+  }, []);
+  const fetchData = async () => {
+    try {
+      const orderIds = maincontent?.OrderIdsAssigned;
+      const response = await fetch(
+        'https://backend.bhoomicam.com/api/drone/drone_order_array/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({order_ids: orderIds}),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+
+      const result = await response.json();
+      console.log(result, 'dataArray is ');
+      setDataArray(result);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   return (
     <View>
