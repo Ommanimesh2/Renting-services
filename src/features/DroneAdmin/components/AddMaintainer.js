@@ -50,7 +50,7 @@ const AddMaintainer = ({navigation, route}) => {
       };
       const updation = await updateProfile(userUpdate);
       console.log(updation);
-      // navigation.goBack();
+      navigation.goBack();
     } catch (error) {
       console.log('object', error);
     }
